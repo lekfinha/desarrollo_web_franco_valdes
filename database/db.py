@@ -30,10 +30,10 @@ def get_actividades(page_size):
     conn = get_conn()
     cursor = conn.cursor()
     cursor.execute("""
-        SELECT a.id, a.comuna_id, a.nombre_organizador, a.email, a.celular, 
-               a.fecha_inicio, a.fecha_termino, a.descripcion 
+        SELECT a.id, a.comuna_id, a.nombre, a.email, a.celular,
+        a.dia_hora_inicio AS fecha_inicio, a.dia_hora_termino AS fecha_termino, a.descripcion
         FROM actividad a 
-        ORDER BY a.fecha_inicio DESC 
+        ORDER BY a.dia_hora_inicio DESC
         LIMIT %s, 5;
     """, (page_size,))
     actividades = cursor.fetchall()
@@ -43,8 +43,8 @@ def get_actividad(id):
     conn = get_conn()
     cursor = conn.cursor()
     cursor.execute("""
-        SELECT a.id, a.comuna_id, a.sector, a.nombre_organizador, a.email, 
-               a.celular, a.fecha_inicio, a.fecha_termino, a.descripcion 
+        SELECT a.id, a.comuna_id, a.sector, a.nombre, a.email,
+        a.celular, a.dia_hora_inicio AS fecha_inicio, a.dia_hora_termino AS fecha_termino, a.descripcion 
         FROM actividad a 
         WHERE a.id=%s;
     """, (id,))
@@ -57,6 +57,13 @@ def get_comuna_nombre(id):
     cursor.execute("SELECT nombre FROM comuna WHERE id=%s;", (id,))
     nombre = cursor.fetchone()
     return nombre[0] if nombre else None
+
+def get_all_comunas():
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, nombre FROM comuna ORDER BY nombre;")
+    comunas = cursor.fetchall()
+    return comunas
 
 def get_region_nombre(comuna_id):
     conn = get_conn()
@@ -74,18 +81,23 @@ def get_temas_actividad(id):
     conn = get_conn()
     cursor = conn.cursor()
     cursor.execute("""
-        SELECT t.nombre 
-        FROM actividad_tema at
-        JOIN tema t ON at.tema_id = t.id
-        WHERE at.actividad_id=%s;
+        SELECT tema, glosa_otro
+        FROM actividad_tema
+        WHERE actividad_id=%s;
     """, (id,))
-    temas = cursor.fetchall()
-    return [t[0] for t in temas]
+    temas_data = cursor.fetchall()
+    temas = []
+    for tema, glosa_otro in temas_data:
+        if tema == 'otro' and glosa_otro:
+            temas.append(glosa_otro)
+        else:
+            temas.append(tema)
+    return temas
 
 def get_fotos_actividad(id):
     conn = get_conn()
     cursor = conn.cursor()
-    cursor.execute("SELECT ruta_archivo FROM archivo WHERE actividad_id=%s;", (id,))
+    cursor.execute("SELECT ruta_archivo FROM foto WHERE actividad_id=%s;", (id,))
     fotos = cursor.fetchall()
     return [f[0] for f in fotos]
 
@@ -124,8 +136,8 @@ def add_foto_actividad(actividad_id, ruta_archivo, nombre_archivo):
     conn = get_conn()
     cursor = conn.cursor()
     cursor.execute("""
-        INSERT INTO archivo 
-        (actividad_id, ruta_archivo, nombre_archivo) 
+        INSERT INTO foto
+        (actividad_id, ruta_archivo, nombre_archivo)
         VALUES (%s, %s, %s);
     """, (actividad_id, ruta_archivo, nombre_archivo))
     conn.commit()

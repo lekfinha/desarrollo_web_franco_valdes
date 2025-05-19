@@ -31,19 +31,21 @@ def index():
         })
     
     return render_template('index.html', actividades=actividades)
-
 @app.route('/agregar', methods=['GET', 'POST'])
 def agregar_actividad():
+    comunas = db.get_all_comunas()  # Necesitamos crear esta función en db.py
+
     if request.method == 'POST':
         errores = validate_actividad_form(request.form, request.files)
-        
+
         if errores:
-            return render_template('agregar.html', 
-                                errores=errores, 
-                                form_data=request.form)
-        
+            return render_template('agregar.html',
+                                errores=errores,
+                                form_data=request.form,
+                                comunas=comunas)  # Pasar las comunas incluso en caso de error
+
         try:
-            # Procesar datos del formulario
+            # Procesar datos del formulario (el resto de tu código POST se mantiene igual)
             comuna_id = request.form['comuna']
             sector = request.form.get('sector', '')
             nombre = request.form['nombre']
@@ -56,24 +58,24 @@ def agregar_actividad():
             otro_tema = request.form.get('otro_tema', '')
             contacto_red = request.form.get('contacto_red', '')
             contacto_info = request.form.get('contacto_info', '')
-            
-            # Insertar actividad principal
+
+            # Insertar actividad principal (tu código de inserción se mantiene igual)
             actividad_id = db.create_actividad(
-                comuna_id, sector, nombre, email, celular, 
+                comuna_id, sector, nombre, email, celular,
                 inicio, termino, descripcion
             )
-            
-            # Insertar tema
+
+            # Insertar tema (tu código de inserción de tema se mantiene igual)
             if tema_id == 'otro':
                 db.add_tema_actividad(actividad_id, None, otro_tema)
             else:
                 db.add_tema_actividad(actividad_id, tema_id)
-            
-            # Insertar contacto si existe
+
+            # Insertar contacto si existe (tu código de inserción de contacto se mantiene igual)
             if contacto_red and contacto_info:
                 db.add_contacto_actividad(actividad_id, contacto_red, contacto_info)
-            
-            # Procesar fotos
+
+            # Procesar fotos (tu código de procesamiento de fotos se mantiene igual)
             fotos = request.files.getlist('fotos')
             for foto in fotos:
                 if foto.filename:
@@ -82,15 +84,14 @@ def agregar_actividad():
                     filepath = os.path.join('uploads', unique_name)
                     foto.save(os.path.join(app.config['UPLOAD_FOLDER'], unique_name))
                     db.add_foto_actividad(actividad_id, filepath, filename)
-            
+
             flash('Actividad registrada exitosamente!', 'success')
             return redirect(url_for('index'))
-            
+
         except Exception as e:
             flash(f'Error al registrar actividad: {str(e)}', 'danger')
-    
-    return render_template('agregar.html')
 
+    return render_template('agregar.html', comunas=comunas) # Pasar las comunas en la solicitud GET
 @app.route('/listado')
 @app.route('/listado/<int:page>')
 def listado_actividades(page=1):
@@ -124,12 +125,18 @@ def listado_actividades(page=1):
                          next_page=next_page,
                          prev_page=prev_page)
 
+@app.route('/estadisticas')
+def estadisticas():
+    return render_template('estadisticas.html')
+
 @app.route('/detalle/<int:id>')
 def detalle_actividad(id):
     actividad = db.get_actividad(id)
     if not actividad:
         flash('Actividad no encontrada', 'danger')
         return redirect(url_for('index'))
+    
+    print(f"Valor de actividad: {actividad}")
     
     id_a, comuna_id, sector, nombre, email, celular, inicio, termino, descripcion = actividad
     comuna = db.get_comuna_nombre(comuna_id)
