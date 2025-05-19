@@ -1,0 +1,31 @@
+h1 {
+    font-size: 50px;
+    font-weight: 600;
+    color : #4c0263;
+    opacity: 0.8;
+}
+
+
+.centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+table, th, td {    
+    border: 1px solid #ddd;
+    text-align: center;
+    
+  }
+td {
+    cursor: pointer;
+}
+th {
+    background-color: #8f029c;
+    opacity: 0.9;
+    color: white;
+}
+td{
+    background-color: #ffffff;
+    opacity: 0.9;
+}

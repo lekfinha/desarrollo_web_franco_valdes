@@ -1,0 +1,276 @@
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.main {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+    background: linear-gradient(rgba(255, 16, 203, 0.3), rgba(128, 31, 31, 0.3)), 
+                url('../img/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    padding-bottom: 50px;
+}
+
+/* Barra de navegación */
+nav {
+    width: 90%;
+    max-width: 1200px;
+    position: sticky;
+    top: 0;
+    margin: 20px auto;
+    padding: 15px 0;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.nav-links ul {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links ul li {
+    margin: 0 15px;
+    position: relative;
+}
+
+.nav-links ul li a {
+    text-decoration: none;
+    color: #4c0263;
+    font-weight: 500;
+    font-size: 16px;
+    padding: 5px 0;
+    transition: color 0.3s;
+}
+
+.nav-links ul li::after {
+    content: '';
+    width: 0%;
+    height: 2px;
+    background: #8f029c;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: width 0.3s;
+}
+
+.nav-links ul li:hover::after {
+    width: 100%;
+}
+
+.nav-links ul li:hover a {
+    color: #8f029c;
+}
+
+/* Contenedor del formulario */
+.container-form {
+    width: 90%;
+    max-width: 800px;
+    margin: 30px auto;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+}
+
+.forms h2 {
+    color: #4c0263;
+    margin-bottom: 25px;
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+/* Grupos de campos */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+fieldset {
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+legend {
+    padding: 0 10px;
+    color: #4c0263;
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+/* Elementos del formulario */
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #4c0263;
+    font-weight: 500;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="datetime-local"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    background-color: #fff;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #8f029c;
+    box-shadow: 0 0 0 3px rgba(143, 2, 156, 0.2);
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Sección de fotos */
+#foto-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.foto-actividad {
+    padding: 10px;
+    border: 2px dashed #ccc;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+}
+
+#agregar-foto {
+    background-color: #4c0263;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    align-self: flex-start;
+}
+
+#agregar-foto:hover {
+    background-color: #6a038f;
+}
+
+/* Botones */
+button[type="submit"],
+#confirm-button,
+#home-button {
+    background-color: #4c0263;
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100%;
+    margin-top: 15px;
+}
+
+button[type="submit"]:hover,
+#confirm-button:hover,
+#home-button:hover {
+    background-color: #6a038f;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(76, 2, 99, 0.3);
+}
+
+#deny-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100%;
+    margin-top: 10px;
+}
+
+#deny-button:hover {
+    background-color: #bb2d3b;
+}
+
+/* Cajas de confirmación */
+.static-centered {
+    text-align: center;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.static-centered h2 {
+    color: #4c0263;
+    margin-bottom: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    nav {
+        padding: 10px;
+    }
+    
+    .nav-links ul {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .nav-links ul li {
+        margin: 5px 10px;
+    }
+    
+    .container-form {
+        padding: 20px;
+    }
+    
+    fieldset {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-links ul {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .nav-links ul li {
+        margin: 5px 0;
+    }
+    
+    .forms h2 {
+        font-size: 1.5rem;
+    }
+    
+    input, select, textarea {
+        padding: 10px 12px;
+    }
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Actividad</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/fotos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main">
+        <nav>
+            <div class="container">   
+                <a href="index.html"><img src="img/logo.png" alt="Logo SocialAct"></a>
+            </div>
+            <div class="nav-links">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="agregar.html">Agregar Actividad</a></li>
+                    <li><a href="listado.html">Ver Listado</a></li>
+                    <li><a href="estadisticas.html">Estadísticas</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="centered">
+            <h1 class="centered">Escuela de Boxeo</h1>
+        </div>
+
+        <div class="info">
+            <div class="left-info">
+                <p class="text-large"><strong>Región:</strong> Metropolitana</p>
+                <p class="text-large"><strong>Comuna:</strong> Santiago</p>
+                <p class="text-large"><strong>Sector:</strong> Beauchef 850, terraza</p>
+                <p class="text-large"><strong>Inicio:</strong> 2025-03-28 12:00</p>
+                <p class="text-large"><strong>Término:</strong> 2025-03-28 14:00</p>
+                <p class="text-large"><strong>Organizador:</strong> Juan Pérez</p>
+                <p class="text-large"><strong>Email:</strong> juan.perez@email.com</p>
+                <p class="text-large"><strong>Teléfono:</strong> +569.12345678</p>
+                <p class="text-large"><strong>Contacto por:</strong> Instagram - @juan.boxeo</p>
+                <p class="text-large"><strong>Tema:</strong> Deporte</p>
+                <p class="text-large"><strong>Descripción:</strong> Taller abierto para todas las edades. ¡Aprende boxeo recreativo al aire libre!</p>
+                <p class="text-large"><strong>Total de fotos:</strong> 3</p>
+            </div>
+
+            <div class="right-info">
+                <img alt="Boxeo 1" id="img1" width="320" height="240" onclick="expandImg('img1')" src="img/boxeo.jpg">
+                <img alt="Boxeo 2" id="img2" width="320" height="240" onclick="expandImg('img2')" src="img/boxeo2.jpg">
+                <img alt="Boxeo 3" id="img3" width="320" height="240" onclick="expandImg('img3')" src="img/boxeo3.jpg">
+            </div>
+        </div>
+
+        <div class="centered">
+            <button type="button" onclick="location.href='listado.html'">Volver al Listado</button>
+            <button type="button" onclick="location.href='index.html'">Volver a Portada</button>
+        </div>
+    </div>
+
+    <script src="js/Imagen.js"></script>
+</body>
+</html>

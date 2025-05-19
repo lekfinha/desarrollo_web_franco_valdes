@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Actividades</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/tablas.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main">
+        <nav>
+            <div class="container">   
+                <a href="index.html"><img src="img/logo.png" alt="Logo SocialAct"></a>
+            </div>
+            <div class="nav-links">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="agregar.html">Agregar Actividad</a></li>
+                    <li><a href="listado.html">Ver Listado</a></li>
+                    <li><a href="estadisticas.html">Estadísticas</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="centered">
+            <h1 class="centered">Listado de Actividades</h1>
+        </div>
+
+        <div class="centered">
+            <table class="display-table" style="width:90%">
+                <tr>
+                    <th>Inicio</th>
+                    <th>Término</th>
+                    <th>Comuna</th>
+                    <th>Sector</th>
+                    <th>Tema</th>
+                    <th>Organizador</th>
+                    <th>Total Fotos</th>
+                </tr>
+                <tr onclick="window.location='detalle.html';">
+                    <td>2025-03-28 12:00</td>
+                    <td>2025-03-28 14:00</td>
+                    <td>Santiago</td>
+                    <td>Beauchef 850</td>
+                    <td>Deporte</td>
+                    <td>Juan Pérez</td>
+                    <td>3</td>
+                </tr>
+                <tr onclick="window.location='detalle.html';">
+                    <td>2025-03-29 19:00</td>
+                    <td>2025-03-29 20:00</td>
+                    <td>Ñuñoa</td>
+                    <td>Plaza Central</td>
+                    <td>Comida</td>
+                    <td>Carla Ríos</td>
+                    <td>2</td>
+                </tr>
+                <tr onclick="window.location='detalle.html';">
+                    <td>2025-03-30 18:00</td>
+                    <td>2025-03-30 20:30</td>
+                    <td>La Florida</td>
+                    <td>Parque Z</td>
+                    <td>Música</td>
+                    <td>Pedro Gómez</td>
+                    <td>1</td>
+                </tr>
+                <tr onclick="window.location='detalle.html';">
+                    <td>2025-04-01 10:00</td>
+                    <td>2025-04-01 12:00</td>
+                    <td>Recoleta</td>
+                    <td>Calle Nueva</td>
+                    <td>Ciencias</td>
+                    <td>Camila Torres</td>
+                    <td>2</td>
+                </tr>
+                <tr onclick="window.location='detalle.html';">
+                    <td>2025-04-02 16:00</td>
+                    <td>2025-04-02 18:30</td>
+                    <td>Providencia</td>
+                    <td>Centro Cultural</td>
+                    <td>Baile</td>
+                    <td>Diego Salas</td>
+                    <td>3</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

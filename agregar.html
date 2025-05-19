@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocialAct - Agregar Actividad</title>
+    <link rel="stylesheet" href="css/agregar.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="js/regiones.js" defer></script>
+</head>
+<body>
+    <div class="main">
+        <nav>
+            <div class="nav-links">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="agregar.html">Agregar Actividad</a></li>
+                    <li><a href="listado.html">Ver Listado</a></li>
+                    <li><a href="estadisticas.html">Estadísticas</a></li>
+                </ul>
+            </div>
+        </nav>
+        
+        <div class="container-form">
+            <form class="forms" id="actividad-form">
+                <div class="form-group">
+                    <h2>Informar Nueva Actividad</h2>
+                    
+                    <!-- Sección Dónde -->
+                    <fieldset>
+                        <legend>¿Dónde?</legend>
+                        <label for="region">Región:</label>
+                        <select id="region" required>
+                            <option value="" selected disabled hidden>Seleccione región</option>
+                        </select>
+                        
+                        <label for="comuna">Comuna:</label>
+                        <select id="comuna" required>
+                            <option value="" selected disabled hidden>Seleccione comuna</option>
+                        </select>
+                        
+                        <label for="sector">Sector (opcional):</label>
+                        <input type="text" id="sector" placeholder="Ej: Parque Central, Calle Principal 123">
+                    </fieldset>
+                    
+                    <!-- Sección Organizador -->
+                    <fieldset>
+                        <legend>¿Quién organiza?</legend>
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" id="nombre" placeholder="Nombre del organizador" required>
+                        
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" placeholder="ejemplo@correo.com" required>
+                        
+                        <label for="celular">Celular (opcional):</label>
+                        <input type="tel" id="celular" placeholder="+569.12345678">
+                        
+                        <label for="contacto-red">Contactar por (opcional):</label>
+                        <select id="contacto-red">
+                            <option value="">Seleccione...</option>
+                            <option value="whatsapp">WhatsApp</option>
+                            <option value="telegram">Telegram</option>
+                            <option value="instagram">Instagram</option>
+                            <option value="otro">Otra red</option>
+                        </select>
+                        
+                        <div id="contacto-info-group" style="display:none;">
+                            <input type="text" id="contacto-info" placeholder="Usuario o enlace">
+                        </div>
+                    </fieldset>
+                    
+                    <!-- Sección Actividad -->
+                    <fieldset>
+                        <legend>¿Cuándo y de qué trata?</legend>
+                        <label for="inicio">Fecha y hora de inicio:</label>
+                        <input type="datetime-local" id="inicio" required>
+                        
+                        <label for="termino">Fecha y hora de término (opcional):</label>
+                        <input type="datetime-local" id="termino">
+                        
+                        <label for="descripcion">Descripción (opcional):</label>
+                        <textarea id="descripcion" rows="4" placeholder="Describa la actividad..."></textarea>
+                        
+                        <label for="tema">Tema:</label>
+                        <select id="tema" required>
+                            <option value="" disabled selected>Seleccione un tema</option>
+                            <option value="música">Música</option>
+                            <option value="deporte">Deporte</option>
+                            <option value="ciencias">Ciencias</option>
+                            <option value="tecnología">Tecnología</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                        
+                        <div id="otro-tema-group" style="display:none;">
+                            <input type="text" id="otro-tema" placeholder="Especifique el tema">
+                        </div>
+                        
+                        <label>Fotos (1-5):</label>
+                        <div id="foto-container">
+                            <input type="file" class="foto-actividad" accept="image/*">
+                        </div>
+                        <button type="button" id="agregar-foto">Agregar otra foto</button>
+                    </fieldset>
+                    
+                    <button type="submit" id="submit-button">Agregar Actividad</button>
+                </div>
+            </form>
+            
+            <div id="confirm-box" class="static-centered" hidden>
+                <h2>¿Confirma que desea agregar esta actividad?</h2>
+                <div>
+                    <button id="confirm-button" type="button">Sí, confirmo</button>
+                    <button id="deny-button" type="button">No, volver al formulario</button>
+                </div>
+            </div>
+            
+            <div id="return-box" class="static-centered" hidden>
+                <h2>¡Actividad registrada con éxito!</h2>
+                <p>Gracias por compartir tu actividad con la comunidad.</p>
+                <button id="home-button" type="button">Volver al Inicio</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>

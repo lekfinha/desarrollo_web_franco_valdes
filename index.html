@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocialAct - Actividades Recreativas</title>
+    <link rel="stylesheet" href="css/index-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main">
+        <nav>
+            <div class="nav-links">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="agregar.html">Agregar Actividad</a></li>
+                    <li><a href="listado.html">Ver Listado</a></li>
+                    <li><a href="estadisticas.html">Estadísticas</a></li>
+                </ul>
+            </div>
+        </nav>
+        
+        <div class="centered">
+            <h1>Últimas Actividades Recreativas</h1>
+            
+            <table>
+                <tr>
+                    <th>Inicio</th>
+                    <th>Término</th>
+                    <th>Comuna</th>
+                    <th>Sector</th>
+                    <th>Tema</th>
+                    <th>Foto</th>
+                </tr>
+                <tr onclick="window.location='detalle.html'">
+                    <td>2025-03-28 12:00</td>
+                    <td>2025-03-28 14:00</td>
+                    <td>Santiago</td>
+                    <td>Beauchef 850</td>
+                    <td>Escuela de Boxeo</td>
+                    <td><img src="img/boxeo.jpg" alt="Boxeo" class="thumbnail"></td>
+                </tr>
+                <tr onclick="window.location='detalle.html'">
+                    <td>2025-03-29 19:00</td>
+                    <td>2025-03-29 20:00</td>
+                    <td>Ñuñoa</td>
+                    <td>Plaza Central</td>
+                    <td>Taller de Frutas</td>
+                    <td><img src="img/frutas.jpg" alt="Frutas" class="thumbnail"></td>
+                </tr>
+                <tr onclick="window.location='detalle.html'">
+                    <td>2025-04-01 10:00</td>
+                    <td>2025-04-01 11:30</td>
+                    <td>La Florida</td>
+                    <td>Parque La Bandera</td>
+                    <td>Yoga al aire libre</td>
+                    <td><img src="img/yoga.jpg" alt="Yoga" class="thumbnail"></td>
+                </tr>
+                <tr onclick="window.location='detalle.html'">
+                    <td>2025-04-02 15:00</td>
+                    <td>2025-04-02 17:00</td>
+                    <td>Providencia</td>
+                    <td>Café Literario</td>
+                    <td>Lectura de Poesía</td>
+                    <td><img src="img/poesia.jpg" alt="Poesía" class="thumbnail"></td>
+                </tr>
+                <tr onclick="window.location='detalle.html'">
+                    <td>2025-04-03 18:00</td>
+                    <td>2025-04-03 20:00</td>
+                    <td>Recoleta</td>
+                    <td>Centro Cultural Recoleta</td>
+                    <td>Taller de Ritmos Latinos</td>
+                    <td><img src="img/baile.jpg" alt="Baile" class="thumbnail"></td>
+                </tr>
+                
+            </table>
+        </div>
+    </div>
+</body>
+</html>

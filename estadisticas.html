@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Estadísticas - SocialAct</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/estadisticas.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <div class="main">
+    <nav>
+      <div class="container">
+        <a href="index.html"><img src="img/logo.png" alt="Logo SocialAct"/></a>
+      </div>
+      <div class="nav-links">
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="agregar.html">Agregar Actividad</a></li>
+          <li><a href="listado.html">Ver Listado</a></li>
+          <li><a href="estadisticas.html">Estadísticas</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="centered">
+      <h1>Estadísticas de Actividades</h1>
+
+      <div class="estadistica">
+        <h2>Actividades por Día</h2>
+        <img src="img/lineas.png" alt="Gráfico de líneas: Actividades por Día" class="grafico"/>
+      </div>
+
+      <div class="estadistica">
+        <h2>Distribución por Tipo</h2>
+        <img src="img/torta.png" alt="Gráfico de torta: Tipos de Actividades" class="grafico"/>
+      </div>
+
+      <div class="estadistica">
+        <h2>Horarios por Mes</h2>
+        <img src="img/barras.png" alt="Gráfico de barras: Horarios de Actividades por Mes" class="grafico"/>
+      </div>
+
+      <div class="centered">
+        <button onclick="window.location.href='index.html'">Volver a Portada</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
