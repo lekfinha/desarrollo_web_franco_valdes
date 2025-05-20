@@ -1,10 +1,15 @@
 {% extends 'base.html' %}
-{% block title %}{{ actividad.nombre }}{% endblock %}
+
+{% block title %}
+{{ actividad.nombre }}
+{% endblock %}
+
 {% block css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/fotos.css') }}">
 {% endblock %}
+
 {% block content %}
+{%for actividad in actividades%}
 <div class="centered">
     <h1 class="centered">{{ actividad.nombre }}</h1>
 </div>
@@ -13,64 +18,54 @@
     <div class="left-info">
         <p class="text-large"><strong>Región:</strong> {{ actividad.region }}</p>
         <p class="text-large"><strong>Comuna:</strong> {{ actividad.comuna }}</p>
+
         {% if actividad.sector %}
         <p class="text-large"><strong>Sector:</strong> {{ actividad.sector }}</p>
         {% endif %}
+
         <p class="text-large"><strong>Inicio:</strong> {{ actividad.inicio }}</p>
+
         {% if actividad.termino %}
         <p class="text-large"><strong>Término:</strong> {{ actividad.termino }}</p>
         {% endif %}
+
         <p class="text-large"><strong>Organizador:</strong> {{ actividad.nombre }} (Contacto)</p>
         <p class="text-large"><strong>Email:</strong> {{ actividad.email }}</p>
+
         {% if actividad.celular %}
         <p class="text-large"><strong>Teléfono:</strong> {{ actividad.celular }}</p>
         {% endif %}
+
         {% if actividad.contacto_red and actividad.contacto_info %}
         <p class="text-large"><strong>Contacto por:</strong> {{ actividad.contacto_red }} - {{ actividad.contacto_info
             }}</p>
         {% endif %}
+
         {% if actividad.temas %}
         <p class="text-large"><strong>Tema{% if actividad.temas|length > 1 %}s{% endif %}:</strong> {{
             actividad.temas|join(', ') }}</p>
+
         {% endif %}
         {% if actividad.descripcion %}
         <p class="text-large"><strong>Descripción:</strong> {{ actividad.descripcion }}</p>
         {% endif %}
+
         <p class="text-large"><strong>Total de fotos:</strong> {{ actividad.fotos|length }}</p>
     </div>
 
     <div class="right-info">
-        {% for foto_url in actividad.fotos %}
+        {% for path in actividad.fotos %}
         {% set unique_id = 'img' + loop.index|string %}
-        <img src="{{ foto_url }}" alt="Foto de la actividad {{ loop.index }}" id="{{ unique_id }}" width="320"
-            height="240" onclick="expandImg('{{ unique_id }}', '{{ foto_url }}')">
+        <img src="{{ path }}" alt="Foto de la actividad {{ loop.index }}" id="{{ unique_id }}" width="320" height="240"
+            onclick="expandImg('{{ unique_id }}')">
         {% endfor %}
     </div>
 </div>
-
 <div class="centered">
-    <button type="button" onclick="window.location='{{ url_for('listado_actividades') }}'">Volver al Listado</button>
-    <button type="button" onclick="window.location='{{ url_for('index') }}'">Volver a Portada</button>
+    <button type="button" onclick="window.location='/ver_artesanos';">Volver a Artesanos</button>
 </div>
-
-<div id="image-viewer" class="overlay" onclick="closeFullImage()">
-    <span class="close-btn">&times;</span>
-    <img id="full-image" src="" alt="Imagen ampliada">
-</div>
-
-{% endblock %}
-{% block javascript %}
-<script>
-    function expandImg(imgId, imageUrl) {
-        const fullImage = document.getElementById('full-image');
-        const imageViewer = document.getElementById('image-viewer');
-        fullImage.src = imageUrl;
-        imageViewer.style.display = 'flex';
-    }
-
-    function closeFullImage() {
-        const imageViewer = document.getElementById('image-viewer');
-        imageViewer.style.display = 'none';
-    }
-</script>
+{%endfor%}
+{%endblock%}
+{% block js %}
+<script src="{{url_for('static', filename='js/Imagen.js')}}"></script>
 {% endblock %}

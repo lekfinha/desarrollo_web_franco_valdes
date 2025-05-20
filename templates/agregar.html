@@ -1,34 +1,13 @@
-<!DOCTYPE html>
-<html lang="es">
+{% extends 'base.html' %}
+{% block title %}{{ actividad.nombre }}{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/fotos.css') }}">
+{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar Actividad - SocialAct</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/agregar.css') }}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap" rel="stylesheet">
-</head>
+{% block content %}
 
 <body>
     <div class="main">
-        <nav>
-            <div class="container">
-                <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='img/logo.png') }}"
-                        alt="Logo SocialAct"></a>
-            </div>
-            <div class="nav-links">
-                <ul>
-                    <li><a href="{{ url_for('index') }}">Inicio</a></li>
-                    <li><a href="{{ url_for('agregar_actividad') }}">Agregar Actividad</a></li>
-                    <li><a href="{{ url_for('listado_actividades') }}">Ver Listado</a></li>
-                    <li><a href="{{ url_for('estadisticas') }}">Estadísticas</a></li>
-                </ul>
-            </div>
-        </nav>
-
         <div class="container centered">
             <h1>Agregar Nueva Actividad</h1>
             <form method="POST" enctype="multipart/form-data" class="activity-form">
@@ -243,5 +222,6 @@
         });
     </script>
 </body>
+{% endblock %}
 
 </html>

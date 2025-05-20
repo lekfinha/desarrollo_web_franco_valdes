@@ -1,23 +1,26 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block css %}{% endblock %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap" rel="stylesheet">
-    {% block css %}{% endblock %}
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/css/multi-select-tag.css">
+    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js"></script>
+
 </head>
 
 <body>
     <div class="main">
         <nav>
             <div class="container">
-                <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='svg/logo.png') }}"
-                        alt="Logo SocialAct"></a>
+                <a href="{{url_for('index')}}"><img src="../static/svg/logo.png" alt="banner"></a>
             </div>
             <div class="nav-links">
                 <ul>
@@ -26,13 +29,14 @@
                     <li><a href="{{ url_for('listado_actividades') }}">Ver Listado</a></li>
                     <li><a href="{{ url_for('estadisticas') }}">Estadísticas</a></li>
                 </ul>
+
             </div>
         </nav>
         <section class="main-container">
-            {% block content %}{% endblock %}
+            {% block content %}{% endblock %} {% block javascript %}{% endblock %}
         </section>
     </div>
-    {% block javascript %}{% endblock %}
+    {% block js %}{% endblock %}
 </body>
 
 </html>

@@ -8,7 +8,7 @@
     <h1 class="centered">Listado de Actividades</h1>
 </div>
 <div class="centered">
-    <table class="display-table" style="width:90%">
+    <table class="display-table" style="width:50%">
         <tr>
             <th>Inicio</th>
             <th>Término</th>
@@ -19,14 +19,18 @@
             <th>Total Fotos</th>
         </tr>
         {% for actividad in actividades %}
-        <tr onclick="window.location='{{ url_for('detalle_actividad', id=actividad.id) }}'">
-            <td>{{ actividad.inicio }}</td>
+        <tr onclick="window.location='{{ url_for('detalle_actividad', id=actividad.id) }}';">
+            <td>{{ actividad.inicio }}</td0>
             <td>{{ actividad.termino or '-' }}</td>
             <td>{{ actividad.comuna }}</td>
             <td>{{ actividad.sector or '-' }}</td>
             <td>{{ actividad.tema }}</td>
             <td>{{ actividad.nombre }}</td>
-            <td>{{ actividad.fotos|length }}</td>
+
+            <td>{%for path in actividad.path_images%}
+                <img src="{{path}}" alt="Imagen" width="120" height="120">
+                {%endfor%}
+            </td>
         </tr>
         {% endfor %}
     </table>

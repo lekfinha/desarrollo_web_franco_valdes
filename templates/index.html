@@ -31,7 +31,7 @@
                 <th>Foto</th>
             </tr>
             {% for actividad in actividades %}
-            <tr onclick="window.location='{{ url_for('detalle_actividad', id=actividad.id) }}'">
+            <tr onclick="window.location='{{ url_for('detalle_actividad', id=actividad.id) }}';">
                 <td>{{ actividad.inicio }}</td>
                 <td>{{ actividad.termino }}</td>
                 <td>{{ actividad.comuna }}</td>
