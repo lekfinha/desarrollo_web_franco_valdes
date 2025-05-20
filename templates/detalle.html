@@ -9,7 +9,6 @@
 {% endblock %}
 
 {% block content %}
-{%for actividad in actividades%}
 <div class="centered">
     <h1 class="centered">{{ actividad.nombre }}</h1>
 </div>
@@ -64,8 +63,9 @@
 <div class="centered">
     <button type="button" onclick="window.location='/ver_artesanos';">Volver a Artesanos</button>
 </div>
-{%endfor%}
+
 {%endblock%}
+
 {% block js %}
 <script src="{{url_for('static', filename='js/Imagen.js')}}"></script>
 {% endblock %}
