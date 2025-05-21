@@ -53,17 +53,16 @@
     </div>
 
     <div class="right-info">
-        {% for path in actividad.fotos %}
+        {% for ruta in actividad.fotos %}
         {% set unique_id = 'img' + loop.index|string %}
-        <img src="{{ path }}" alt="Foto de la actividad {{ loop.index }}" id="{{ unique_id }}" width="320" height="240"
+        <img src="{{ ruta }}" alt="Foto de la actividad {{ loop.index }}" id="{{ unique_id }}" width="320" height="240"
             onclick="expandImg('{{ unique_id }}')">
         {% endfor %}
     </div>
 </div>
 <div class="centered">
-    <button type="button" onclick="window.location='/ver_artesanos';">Volver a Artesanos</button>
+    <button type="button" onclick="window.location='/listado';">Volver a Actividades</button>
 </div>
-
 {%endblock%}
 
 {% block js %}

@@ -186,42 +186,18 @@
                     <div class="error">{{ errores['fotos'] }}</div>
                     {% endif %}
                 </div>
-
-                <button type="submit" class="btn btn-primary">Registrar Actividad</button>
-                <div class="centered">
-                    <button type="button" class="btn btn-secondary"
-                        onclick="window.location.href='{{ url_for('index') }}'">Volver a Portada</button>
-                </div>
             </form>
         </div>
     </div>
+    <button type="submit" class="btn btn-primary">Registrar Actividad</button>
+    <div class="centered">
+        <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ url_for('index') }}'">Volver a
+            Portada</button>
+    </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const temaSelect = document.getElementById('tema');
-            const otroTemaInput = document.getElementById('otroTemaInput');
-            const contactoOtroRadio = document.getElementById('otro_contacto');
-            const contactoInfoInput = document.getElementById('contacto_info');
-
-            function toggleOtroTemaInput() {
-                otroTemaInput.style.display = temaSelect.value === 'otro' ? 'block' : 'none';
-            }
-
-            function toggleContactoOtroInput() {
-                contactoInfoInput.style.display = contactoOtroRadio.checked ? 'inline-block' : 'none';
-            }
-
-            if (temaSelect) {
-                temaSelect.addEventListener('change', toggleOtroTemaInput);
-                toggleOtroTemaInput(); // Initial state on page load
-            }
-
-            if (contactoOtroRadio) {
-                contactoOtroRadio.addEventListener('change', toggleContactoOtroInput);
-                toggleContactoOtroInput(); // Initial state on page load
-            }
-        });
-    </script>
+    {% block javascript %}
+    <script src="{{url_for('static', filename='js/validatorA.js')}}"></script>
+    {%endblock%}
 </body>
 {% endblock %}
 

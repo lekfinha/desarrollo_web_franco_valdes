@@ -2,6 +2,7 @@ USE tarea2;
 
 SET FOREIGN_KEY_CHECKS = 0;
 
+-- Actividad 1: Concierto de Jazz en Recoleta (música)
 INSERT INTO
     actividad (
         comuna_id,
@@ -36,10 +37,11 @@ INSERT INTO
     )
 VALUES (
         LAST_INSERT_ID(),
-        'static/jpg/jazz.jpg',
+        'jpg/jazz.jpg',
         'jazz.jpg'
     );
 
+-- Actividad 2: Clase de Yoga al Aire Libre en Parque Metropolitano (Santiago) (deporte)
 INSERT INTO
     actividad (
         comuna_id,
@@ -74,10 +76,11 @@ INSERT INTO
     )
 VALUES (
         LAST_INSERT_ID(),
-        'static/jpg/yoga.jpg',
+        'jpg/yoga.jpg',
         'yoga.jpg'
     );
 
+-- Actividad 3: Taller de Robótica para Niños en Providencia (tecnología)
 INSERT INTO
     actividad (
         comuna_id,
@@ -115,10 +118,11 @@ INSERT INTO
     )
 VALUES (
         LAST_INSERT_ID(),
-        'static/jpg/robots.jpg',
+        'jpg/robots.jpg',
         'robots.jpg'
     );
 
+-- Actividad 4: Festival Gastronómico "Sabores de Chile" en Las Condes (comida)
 INSERT INTO
     actividad (
         comuna_id,
@@ -153,10 +157,11 @@ INSERT INTO
     )
 VALUES (
         LAST_INSERT_ID(),
-        'static/jpg/comida.jpg',
+        'jpg/comida.jpg',
         'comida.jpg'
     );
 
+-- Actividad 5: Torneo de Ajedrez Rápido en Ñuñoa (juegos)
 INSERT INTO
     actividad (
         comuna_id,
@@ -191,10 +196,11 @@ INSERT INTO
     )
 VALUES (
         LAST_INSERT_ID(),
-        'static/jpg/ajedrez.jpg',
+        'jpg/ajedrez.jpg',
         'ajedrez.jpg'
     );
 
+-- Actividad 6: Noche de Baile Folclórico en Recoleta (baile)
 INSERT INTO
     actividad (
         comuna_id,
@@ -229,10 +235,11 @@ INSERT INTO
     )
 VALUES (
         LAST_INSERT_ID(),
-        'static/jpg/tinku.jpg',
+        'jpg/tinku.jpg',
         'tinku.jpg'
     );
 
+-- Actividad 7: Charla "El Universo Cuántico" en Santiago (ciencias)
 INSERT INTO
     actividad (
         comuna_id,
@@ -267,10 +274,11 @@ INSERT INTO
     )
 VALUES (
         LAST_INSERT_ID(),
-        'static/jpg/universo.jpg',
+        'jpg/universo.jpg',
         'universo.jpg'
     );
 
+-- Actividad 8: Bootcamp de Programación Web en Providencia (tecnología)
 INSERT INTO
     actividad (
         comuna_id,
@@ -308,10 +316,11 @@ INSERT INTO
     )
 VALUES (
         LAST_INSERT_ID(),
-        'static/jpg/computador.jpg',
+        'jpg/computador.jpg',
         'computador.jpg'
     );
 
+-- Actividad 9: Día de Voluntariado Ambiental en Las Condes (otro: Medio ambiente)
 INSERT INTO
     actividad (
         comuna_id,
@@ -354,10 +363,11 @@ INSERT INTO
     )
 VALUES (
         LAST_INSERT_ID(),
-        'static/jpg/medioambiente.jpg',
+        'jpg/medioambiente.jpg',
         'medioambiente.jpg'
     );
 
+-- Actividad 10: Sesión de Lectura de Poesía en Ñuñoa (música)
 INSERT INTO
     actividad (
         comuna_id,
@@ -392,10 +402,13 @@ INSERT INTO
     )
 VALUES (
         LAST_INSERT_ID(),
-        'static/jpg/poesia.jpg',
+        'jpg/poesia.jpg',
         'poesia.jpg'
     );
 
+-- Segunda tanda de actividades con nuevas comunas
+
+-- Actividad 11: Ruta en Bicicleta por el Cerro San Fernando (San Fernando) (deporte)
 INSERT INTO
     actividad (
         comuna_id,
@@ -430,10 +443,11 @@ INSERT INTO
     )
 VALUES (
         LAST_INSERT_ID(),
-        'static/jpg/bicicleta.jpg',
+        'jpg/bicicleta.jpg',
         'bicicleta.jpg'
     );
 
+-- Actividad 12: Feria Artesanal Mapuche en Temuco (Temuco) (otro: Cultura)
 INSERT INTO
     actividad (
         comuna_id,
@@ -476,10 +490,11 @@ INSERT INTO
     )
 VALUES (
         LAST_INSERT_ID(),
-        'static/jpg/mapuche.jpg',
+        'jpg/mapuche.jpg',
         'mapuche.jpg'
     );
 
+-- Actividad 13: Taller de Fotografía Desértica (Arica) (ciencias)
 INSERT INTO
     actividad (
         comuna_id,
@@ -514,10 +529,11 @@ INSERT INTO
     )
 VALUES (
         LAST_INSERT_ID(),
-        'static/jpg/arica.jpg',
+        'jpg/arica.jpg',
         'arica.jpg'
     );
 
+-- Actividad 14: Campeonato de Skate en Alto Hospicio (Alto Hospicio) (deporte)
 INSERT INTO
     actividad (
         comuna_id,
@@ -552,10 +568,11 @@ INSERT INTO
     )
 VALUES (
         LAST_INSERT_ID(),
-        'static/jpg/skate.jpg',
+        'jpg/skate.jpg',
         'skate.jpg'
     );
 
+-- Actividad 15: Concurso de Cocina Marina en Puerto Montt (Puerto Montt) (comida)
 INSERT INTO
     actividad (
         comuna_id,
@@ -590,10 +607,11 @@ INSERT INTO
     )
 VALUES (
         LAST_INSERT_ID(),
-        'static/jpg/mariscos.jpg',
+        'jpg/mariscos.jpg',
         'mariscos.jpg'
     );
 
+-- Actividad 16: Recorrido Histórico por Cerros de Valparaíso (Valparaíso) (otro: Patrimonio)
 INSERT INTO
     actividad (
         comuna_id,
@@ -636,10 +654,11 @@ INSERT INTO
     )
 VALUES (
         LAST_INSERT_ID(),
-        'static/jpg/valparaiso.jpg',
+        'jpg/valparaiso.jpg',
         'valparaiso.jpg'
     );
 
+-- Actividad 17: Observación Astronómica en San Fernando (San Fernando) (ciencias)
 INSERT INTO
     actividad (
         comuna_id,
@@ -674,10 +693,11 @@ INSERT INTO
     )
 VALUES (
         LAST_INSERT_ID(),
-        'static/jpg/universo.jpg',
+        'jpg/universo.jpg',
         'universo.jpg'
     );
 
+-- Actividad 18: Festival de Música Chilena en Temuco (Temuco) (música chilena)
 INSERT INTO
     actividad (
         comuna_id,
@@ -712,10 +732,11 @@ INSERT INTO
     )
 VALUES (
         LAST_INSERT_ID(),
-        'static/jpg/cueca.jpg',
+        'jpg/cueca.jpg',
         'cueca.jpg'
     );
 
+-- Actividad 19: Clase de Surf en Arica (Arica) (deporte)
 INSERT INTO
     actividad (
         comuna_id,
@@ -750,10 +771,11 @@ INSERT INTO
     )
 VALUES (
         LAST_INSERT_ID(),
-        'static/jpg/surf.jpg',
+        'jpg/surf.jpg',
         'surf.jpg'
     );
 
+-- Actividad 20: Taller de Reparación de Dispositivos Electrónicos en Puerto Montt (Puerto Montt) (tecnología)
 INSERT INTO
     actividad (
         comuna_id,
@@ -791,10 +813,11 @@ INSERT INTO
     )
 VALUES (
         LAST_INSERT_ID(),
-        'static/jpg/computador.jpg',
+        'jpg/computador.jpg',
         'computador.jpg'
     );
 
+-- Actividad 21: Charla sobre Ética y Sociedad (Santiago - Religión)
 INSERT INTO
     actividad (
         comuna_id,
@@ -829,10 +852,11 @@ INSERT INTO
     )
 VALUES (
         LAST_INSERT_ID(),
-        'static/png/religion.png',
+        'png/religion.png',
         'religion.png'
     );
 
+-- Actividad 22: Foro Abierto: Desafíos Políticos Actuales (Providencia - Política)
 INSERT INTO
     actividad (
         comuna_id,
@@ -867,7 +891,7 @@ INSERT INTO
     )
 VALUES (
         LAST_INSERT_ID(),
-        'static/jpg/politica.jpg',
+        'jpg/politica.jpg',
         'politica.jpg'
     );
 
