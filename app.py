@@ -14,7 +14,7 @@ app.config['UPLOAD_FOLDER'] = 'static/uploads'
 def index():
     actividades = []
     for act in db.get_actividades(0):  
-        id_a, comuna_id, nombre, email, celular, inicio, termino, descripcion = act
+        id_a, comuna_id, sector, nombre, email, celular, inicio, termino, descripcion = act
         comuna = db.get_comuna_nombre(comuna_id)
         temas = db.get_temas_actividad(id_a)
         fotos = db.get_fotos_actividad(id_a)
@@ -22,6 +22,7 @@ def index():
         actividades.append({
             'id': id_a,
             'comuna': comuna,
+            'sector': sector,
             'nombre': nombre,
             'inicio': inicio.strftime('%Y-%m-%d %H:%M'),
             'termino': termino.strftime('%Y-%m-%d %H:%M') if termino else '-',
@@ -87,6 +88,7 @@ def agregar_actividad():
             flash(f'Error al registrar actividad: {str(e)}', 'danger')
 
     return render_template('agregar.html', comunas=comunas)
+
 @app.route('/listado')
 @app.route('/listado/<int:page>')
 def listado_actividades(page=1):
@@ -111,7 +113,8 @@ def listado_actividades(page=1):
             'inicio': inicio.strftime('%Y-%m-%d %H:%M'),
             'termino': termino.strftime('%Y-%m-%d %H:%M') if termino else '-',
             'tema': temas[0] if temas else '',
-            'fotos': [url_for('static', filename=f) for f in fotos][:1]  
+            'total_fotos': len(fotos),
+            'fotos': [url_for('static', filename=f) for f in fotos][:1]   
         })
     
     return render_template('listado.html', 

@@ -16,6 +16,7 @@
             <th>Sector</th>
             <th>Tema</th>
             <th>Organizador</th>
+            <th>Foto</th>
             <th>Total Fotos</th>
         </tr>
         {% for actividad in actividades %}
@@ -32,11 +33,14 @@
 
             <td>{{ actividad.tema }}</td>
             <td>{{ actividad.nombre }}</td>
-
-            <td>{%for path in actividad.path_images%}
-                <img src="{{path}}" alt="Imagen" width="120" height="120">
-                {%endfor%}
+            <td>
+                {% if actividad.fotos %}
+                <img src="{{ actividad.fotos[0] }}" alt="Foto" class="thumbnail" width="100" height="80">
+                {% else %}
+                Sin foto
+                {% endif %}
             </td>
+            <td> {{actividad.total_fotos}} </td>
         </tr>
         {% endfor %}
     </table>
