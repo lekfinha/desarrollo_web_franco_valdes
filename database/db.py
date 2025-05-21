@@ -30,7 +30,7 @@ def get_actividades(page_size):
     conn = get_conn()
     cursor = conn.cursor()
     cursor.execute("""
-        SELECT a.id, a.comuna_id, a.nombre, a.email, a.celular,
+        SELECT a.id, a.comuna_id, a.sector, a.nombre, a.email, a.celular,
         a.dia_hora_inicio AS fecha_inicio, a.dia_hora_termino AS fecha_termino, a.descripcion
         FROM actividad a 
         ORDER BY a.dia_hora_inicio DESC

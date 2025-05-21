@@ -30,6 +30,7 @@ def index():
         })
     
     return render_template('index.html', actividades=actividades)
+
 @app.route('/agregar', methods=['GET', 'POST'])
 def agregar_actividad():
     comunas = db.get_all_comunas()  
@@ -97,7 +98,7 @@ def listado_actividades(page=1):
     
     actividades = []
     for act in db.get_actividades((page-1)*page_size):
-        id_a, comuna_id, nombre, email, celular, inicio, termino, descripcion = act
+        id_a, comuna_id, sector, nombre, email, celular, inicio, termino, descripcion = act
         comuna = db.get_comuna_nombre(comuna_id)
         temas = db.get_temas_actividad(id_a)
         fotos = db.get_fotos_actividad(id_a)
@@ -105,6 +106,7 @@ def listado_actividades(page=1):
         actividades.append({
             'id': id_a,
             'comuna': comuna,
+            'sector': sector,
             'nombre': nombre,
             'inicio': inicio.strftime('%Y-%m-%d %H:%M'),
             'termino': termino.strftime('%Y-%m-%d %H:%M') if termino else '-',
