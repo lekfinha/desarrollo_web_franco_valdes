@@ -65,6 +65,21 @@ def get_all_comunas():
     comunas = cursor.fetchall()
     return comunas
 
+def get_all_regiones():
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, nombre FROM region ORDER BY id;")
+    regiones = cursor.fetchall()
+    return regiones
+
+def get_comunas_by_region_id(region_id):
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, nombre FROM comuna WHERE region_id = %s ORDER BY nombre;", (region_id,))
+    comunas = cursor.fetchall()
+    conn.close() 
+    return comunas
+
 def get_region_nombre(comuna_id):
     conn = get_conn()
     cursor = conn.cursor()

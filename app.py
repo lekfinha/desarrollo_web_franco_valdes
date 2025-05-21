@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from database import db
 from utils.validations import validate_actividad_form
 import os
@@ -159,6 +159,16 @@ def detalle_actividad(id):
     }
     
     return render_template('detalle.html', actividad=actividad_data)
+
+@app.route('/api/regiones', methods=['GET'])
+def get_regiones_api():
+    regiones = db.get_all_regiones()
+    return jsonify(regiones)
+
+@app.route('/api/comunas/<int:region_id>', methods=['GET'])
+def get_comunas_api(region_id):
+    comunas = db.get_comunas_by_region_id(region_id)
+    return jsonify(comunas)
 
 if __name__ == '__main__':
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
