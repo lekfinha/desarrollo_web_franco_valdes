@@ -23,16 +23,22 @@
                 {% endif %}
 
                 <div class="form-group">
+                    <label for="region">Región:</label>
+                    <select class="form-control" id="region" name="region" required>
+                        <option value="">Seleccione una región</option>
+                    </select>
+                    {% if errores and 'region' in errores %}
+                    <div class="error-message">{{ errores['region'][0] }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
                     <label for="comuna">Comuna:</label>
                     <select class="form-control" id="comuna" name="comuna" required>
                         <option value="">Seleccione una comuna</option>
-                        {% for comuna_id, comuna_nombre in comunas %}
-                        <option value="{{ comuna_id }}" {% if form_data and form_data['comuna']==comuna_id|string
-                            %}selected{% endif %}>{{ comuna_nombre }}</option>
-                        {% endfor %}
                     </select>
                     {% if errores and 'comuna' in errores %}
-                    <div class="error">{{ errores['comuna'] }}</div>
+                    <div class="error-message">{{ errores['comuna'][0] }}</div>
                     {% endif %}
                 </div>
 
@@ -186,17 +192,19 @@
                     <div class="error">{{ errores['fotos'] }}</div>
                     {% endif %}
                 </div>
+
+                <div class="form-buttons-container">
+                    <button type="submit" class="btn btn-primary">Registrar Actividad</button>
+                    <button type="button" class="btn btn-secondary"
+                        onclick="window.location.href='{{ url_for('index') }}'">Volver a
+                        Portada</button>
+                </div>
             </form>
         </div>
     </div>
-    <button type="submit" class="btn btn-primary">Registrar Actividad</button>
-    <div class="centered">
-        <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ url_for('index') }}'">Volver a
-            Portada</button>
-    </div>
 
     {% block javascript %}
-    <script src="{{url_for('static', filename='js/validatorA.js')}}"></script>
+    <script src="{{url_for('static', filename='js/validator.js')}}"></script>
     {%endblock%}
 </body>
 {% endblock %}

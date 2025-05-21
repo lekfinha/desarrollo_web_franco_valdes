@@ -14,6 +14,7 @@
             <th>Término</th>
             <th>Comuna</th>
             <th>Sector</th>
+            <th>Nombre</th>
             <th>Tema</th>
             <th>Organizador</th>
             <th>Foto</th>
@@ -24,12 +25,8 @@
             <td>{{ actividad.inicio }}</td0>
             <td>{{ actividad.termino or '-' }}</td>
             <td>{{ actividad.comuna }}</td>
-
-            {% if actividad.sector %}
-            <td>{{ actividad.sector }}</td>
-            {% else %}
-            <td>{{ "-" }}</td>
-            {% endif %}
+            <td>{{ actividad.sector or "-" }}</td>
+            <td>{{ actividad.nombre }} </td>
 
             <td>{{ actividad.tema }}</td>
             <td>{{ actividad.nombre }}</td>
