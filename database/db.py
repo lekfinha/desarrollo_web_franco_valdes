@@ -116,33 +116,35 @@ def get_fotos_actividad(id):
     fotos = cursor.fetchall()
     return [f[0] for f in fotos]
 
+# Añadir
+
 def create_actividad(comuna_id, sector, nombre, email, celular, inicio, termino, descripcion):
     conn = get_conn()
     cursor = conn.cursor()
     cursor.execute("""
         INSERT INTO actividad 
-        (comuna_id, sector, nombre_organizador, email, celular, fecha_inicio, fecha_termino, descripcion) 
+        (comuna_id, sector, nombre, email, celular, dia_hora_inicio, dia_hora_termino, descripcion) 
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s);
     """, (comuna_id, sector, nombre, email, celular, inicio, termino, descripcion))
     conn.commit()
     return cursor.lastrowid
 
-def add_tema_actividad(actividad_id, tema_id, otro_tema=None):
+def add_tema_actividad(actividad_id, tema, glosa_otro=None):
     conn = get_conn()
     cursor = conn.cursor()
     cursor.execute("""
         INSERT INTO actividad_tema 
-        (actividad_id, tema_id, otro_tema) 
+        (actividad_id, tema, glosa_otro) 
         VALUES (%s, %s, %s);
-    """, (actividad_id, tema_id, otro_tema))
+    """, (actividad_id, tema, glosa_otro))
     conn.commit()
 
-def add_contacto_actividad(actividad_id, tipo_contacto, valor_contacto):
+def add_contacto_actividad(actividad_id, nombre, valor_contacto):
     conn = get_conn()
     cursor = conn.cursor()
     cursor.execute("""
         INSERT INTO contactar_por 
-        (actividad_id, tipo, valor) 
+        (actividad_id, nombre, identificador) 
         VALUES (%s, %s, %s);
     """, (actividad_id, tipo_contacto, valor_contacto))
     conn.commit()

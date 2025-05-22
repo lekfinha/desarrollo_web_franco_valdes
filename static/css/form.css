@@ -143,6 +143,24 @@ button {
     text-align: left;
 }
 
+/* Añade esto a tu CSS */
+
+.error-container .error:first-child {
+    white-space: normal !important;
+    /* Fuerza el salto de línea para el primer error */
+    display: block !important;
+    /* Asegura que el primer error ocupe su propia línea */
+    width: auto !important;
+    /* Ocupa el ancho necesario, no se comprime */
+}
+
+/* También, si el problema persiste, revisa el propio .error-container */
+.error-container {
+    display: block;
+    /* Asegura que no sea un flex/grid container si no lo necesitas así */
+    /* ... (resto de tus estilos para .error-container) ... */
+}
+
 .error {
     display: block;
     padding: 5px 0;
