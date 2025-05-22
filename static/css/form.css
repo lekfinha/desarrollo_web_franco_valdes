@@ -106,54 +106,60 @@ button {
     box-sizing: border-box;
 }
 
-/* ESTAS REGLAS SON CRUCIALES Y DEBEN ESTAR PRESENTES */
 .form-buttons-container .btn {
     position: static;
-    /* Restablece a la posición normal del flujo del documento */
     top: auto;
-    /* Elimina la propiedad 'top' del posicionamiento absoluto */
     left: auto;
-    /* Elimina la propiedad 'left' del posicionamiento absoluto */
     transform: none;
-    /* Elimina la transformación de centrado */
     -ms-transform: none;
-    /* Para compatibilidad con IE */
 
-    /* Puedes ajustar o eliminar estas si quieres que los estilos de Bootstrap apliquen */
     padding: 10px 20px;
-    /* Los colores deben ser definidos por .btn-primary y .btn-secondary para consistencia con Bootstrap */
     border: none;
     border-radius: 4px;
     cursor: pointer;
     margin: 8px;
-    /* Pequeño margen para espacio entre los botones, si 'gap' no es suficiente por sí solo */
 }
 
-/* Define los colores para los botones primario y secundario si no vienen de Bootstrap */
 .form-buttons-container .btn-primary {
     background-color: #007bff;
-    /* Color azul de Bootstrap Primary */
     color: white;
 }
 
 .form-buttons-container .btn-secondary {
     background-color: #6c757d;
-    /* Color gris de Bootstrap Secondary */
     color: white;
 }
 
-/* MUY IMPORTANTE: La siguiente regla general 'button' en tu form.css
-   está sobrescribiendo los colores de .btn-primary y .btn-secondary.
-   Si quieres usar los colores de Bootstrap, DEBES ELIMINAR O MODIFICAR esta regla general.
-   Si la mantienes, tus botones serán verdes por defecto a menos que los anules explícitamente.
-*/
-/* button {
-    background-color: #4CAF50; 
-    color: white;
-    padding: 10px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+.error-container {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #dc3545;
+    background-color: #f8d7da;
+    color: #721c24;
+    border-radius: 5px;
+    box-sizing: border-box;
+    text-align: left;
 }
-*/
+
+.error {
+    display: block;
+    padding: 5px 0;
+    font-size: 0.9em;
+    line-height: 1.2;
+    white-space: normal;
+    margin-bottom: 5px;
+}
+
+.error:last-child {
+    margin-bottom: 0;
+}
+
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.85em;
+    margin-top: 5px;
+    display: block;
+}
