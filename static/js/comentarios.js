@@ -77,9 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.error) {
                 throw new Error(data.error);
             }
-            // Limpiar formulario
             comentarioForm.reset();
-            // Recargar comentarios
             cargarComentarios();
         })
         .catch(error => {

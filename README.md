@@ -1,36 +1,32 @@
-# Tarea 2 - Sistema de Registro de Actividades
+# Tarea 3 Actividades Sociales
 
-Este sistema permite registrar y gestionar actividades comunitarias, incluyendo su ubicación, detalles de contacto, temas y fotos.
+Aplicación web para gestionar actividades sociales, desarrollada con Flask y MySQL.
 
-## Requisitos Previos
+## Características
 
-- Python 3.x
-- MariaDB/MySQL
-- pip (gestor de paquetes de Python)
+- Registro y gestión de actividades sociales
+- Validación de formularios en tiempo real
+- Carga y visualización de imágenes
+- Sistema de comentarios para cada actividad
+- Estadísticas de actividades con gráficos interactivos
+- Paginación de resultados
+- Diseño responsivo
 
-## Configuración de la Base de Datos
+## Requisitos
 
-1. Crear la base de datos y el usuario:
-```sql
-CREATE DATABASE tarea2;
-CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin';
-GRANT ALL PRIVILEGES ON tarea2.* TO 'admin'@'localhost';
-FLUSH PRIVILEGES;
-```
+- Python 3.8 o superior
+- MySQL 8.0 o superior
+- Navegador web moderno
 
-2. Importar la estructura de la base de datos:
+## Instalación
+
+1. Clonar el repositorio:
 ```bash
-mysql -u admin -p tarea2 < database/schema.sql
+git clone https://github.com/lekfinha/desarrollo_web_franco_valdes.git
+cd desarrollo_web_franco_valdes/Tareas/tarea2
 ```
 
-3. Poblar la base de datos con datos iniciales:
-```bash
-mysql -u admin -p tarea2 < database/poblar.sql
-```
-
-## Configuración del Entorno Virtual
-
-1. Crear y activar el entorno virtual:
+2. Crear y activar entorno virtual:
 ```bash
 python -m venv venv
 source venv/bin/activate  # En Linux/Mac
@@ -38,52 +34,119 @@ source venv/bin/activate  # En Linux/Mac
 venv\Scripts\activate  # En Windows
 ```
 
-2. Instalar las dependencias:
+3. Instalar dependencias:
 ```bash
 pip install -r requirements.txt
 ```
 
-## Ejecutar la Aplicación
+4. Configurar la base de datos:
+```bash
+mysql -u admin -p
+```
+```sql
+CREATE DATABASE tarea2;
+USE tarea2;
+source database/tabla-actividad.sql;
+source database/poblar.sql;
+source database/tabla-comentario.sql;
+```
 
-1. Asegurarse de que el entorno virtual está activado
-2. Ejecutar la aplicación:
+5. Configurar variables de entorno:
+```bash
+export FLASK_APP=app.py
+export FLASK_ENV=development
+```
+
+## Ejecución
+
+1. Iniciar el servidor:
 ```bash
 python app.py
 ```
-3. Abrir el navegador en `http://localhost:5000`
+
+2. Abrir en el navegador:
+```
+http://localhost:5000
+```
 
 ## Estructura del Proyecto
 
 ```
 tarea2/
-├── app.py              # Aplicación principal Flask
+├── app.py                 # Aplicación principal Flask
 ├── database/
-│   ├── db.py          # Funciones de base de datos
-│   ├── schema.sql     # Estructura de la base de datos
-│   └── poblar.sql     # Datos iniciales
+│   ├── db.py             # Funciones de base de datos
+│   ├── tabla-actividad.sql
+│   └── tabla-comentario.sql
 ├── static/
-│   ├── css/          # Estilos CSS
-│   ├── js/           # JavaScript
-│   └── uploads/      # Carpeta para fotos subidas
-├── templates/        # Plantillas HTML
-└── utils/
-    └── validations.py # Validaciones del formulario
+│   ├── css/
+│   │   ├── main.css
+│   │   ├── detalle.css
+│   │   ├── comentarios.css
+│   │   └── estadisticas.css
+│   ├── js/
+│   │   ├── validator.js
+│   │   ├── comentarios.js
+│   │   └── estadisticas.js
+│   └── uploads/          # Imágenes subidas
+├── templates/
+│   ├── base.html
+│   ├── index.html
+│   ├── detalle.html
+│   ├── agregar.html
+│   └── estadisticas.html
+├── utils/
+│   └── validations.py    # Validaciones de formularios
+└── requirements.txt
 ```
 
-## Características Principales
+## Características Implementadas
 
-- Registro de actividades con ubicación (región/comuna)
-- Gestión de temas y temas personalizados
-- Múltiples métodos de contacto
-- Subida de fotos (hasta 5 por actividad)
-- Validación de formularios
-- Listado paginado de actividades
-- Vista detallada de cada actividad
+### Gestión de Actividades
+- Formulario de registro con validación en tiempo real
+- Campos obligatorios y formatos específicos
+- Carga de imágenes con validación de tipo y tamaño
+- Visualización de actividades con paginación
 
-## Notas Importantes
+### Sistema de Comentarios
+- Comentarios por actividad
+- Validación de nombre y texto
+- Actualización asíncrona de comentarios
+- Interfaz intuitiva y responsiva
 
-- Las fotos se guardan en `static/uploads/`
-- El formato de celular debe ser: +569XXXXXXXX
-- Las fechas de inicio deben ser posteriores a la fecha actual
-- Se pueden subir hasta 5 fotos por actividad
-- Los temas personalizados deben tener entre 3 y 15 caracteres
+### Estadísticas
+- Gráfico de actividades por día
+- Distribución de actividades por tema
+- Análisis de actividades por mes y horario (Falta arreglar)
+- Visualización interactiva con Highcharts
+
+## Validaciones
+
+### Formulario de Actividad
+- Nombre: 3-80 caracteres
+- Descripción: 5-300 caracteres
+- Tema: selección obligatoria
+- Fecha inicio: formato YYYY-MM-DD, posterior a hoy
+- Fecha término: posterior a fecha inicio
+- Hora inicio: formato HH:MM
+- Hora término: posterior a hora inicio
+- Teléfono: formato +569XXXXXXXX
+- Email: formato válido
+- Imagen: JPG/PNG, máximo 5MB
+
+### Comentarios
+- Nombre: 3-80 caracteres
+- Texto: mínimo 5 caracteres, máximo 300 caracteres
+
+## Tecnologías Utilizadas
+
+- Backend: Python, Flask
+- Base de datos: MySQL
+- Frontend: HTML5, CSS3, JavaScript
+- Gráficos: Highcharts
+- Validación: JavaScript, Python
+- Estilos: CSS
+
+## Autor
+
+Franco Valdés
