@@ -137,6 +137,54 @@ def listado_actividades(page=1):
 def estadisticas():
     return render_template('estadisticas.html')
 
+@app.route('/api/estadisticas/actividades-por-dia')
+def api_actividades_por_dia():
+    datos = db.get_actividades_por_dia()
+    return jsonify([{'fecha': str(fecha), 'total': total} for fecha, total in datos])
+
+@app.route('/api/estadisticas/actividades-por-tema')
+def api_actividades_por_tema():
+    datos = db.get_actividades_por_tema()
+    return jsonify([{'tema': tema, 'total': total} for tema, total in datos])
+
+@app.route('/api/estadisticas/actividades-por-mes-horario')
+def api_actividades_por_mes_horario():
+    datos = db.get_actividades_por_mes_horario()
+    return jsonify([{
+        'mes': mes,
+        'manana': manana,
+        'mediodia': mediodia,
+        'tarde': tarde
+    } for mes, manana, mediodia, tarde in datos])
+
+@app.route('/api/comentarios/<int:actividad_id>', methods=['GET'])
+def api_get_comentarios(actividad_id):
+    comentarios = db.get_comentarios_actividad(actividad_id)
+    return jsonify([{
+        'id': id,
+        'nombre': nombre,
+        'texto': texto,
+        'fecha': fecha.strftime('%Y-%m-%d %H:%M:%S')
+    } for id, nombre, texto, fecha in comentarios])
+
+@app.route('/api/comentarios/<int:actividad_id>', methods=['POST'])
+def api_add_comentario(actividad_id):
+    data = request.get_json()
+    nombre = data.get('nombre')
+    texto = data.get('texto')
+    
+    if not nombre or len(nombre) < 3 or len(nombre) > 80:
+        return jsonify({'error': 'El nombre debe tener entre 3 y 80 caracteres'}), 400
+    
+    if not texto or len(texto) < 5:
+        return jsonify({'error': 'El comentario debe tener al menos 5 caracteres'}), 400
+    
+    try:
+        db.add_comentario(nombre, texto, actividad_id)
+        return jsonify({'success': True})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 @app.route('/detalle/<int:id>')
 def detalle_actividad(id):
     actividad = db.get_actividad(id)
