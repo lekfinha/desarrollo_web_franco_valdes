@@ -41,6 +41,19 @@ VALUES (
         'jazz.jpg'
     );
 
+-- Contacto para Actividad 1
+INSERT INTO
+    contactar_por (
+        nombre,
+        identificador,
+        actividad_id
+    )
+VALUES (
+        'whatsapp',
+        '+56912345678',
+        LAST_INSERT_ID()
+    );
+
 -- Actividad 2: Clase de Yoga al Aire Libre en Parque Metropolitano (Santiago) (deporte)
 INSERT INTO
     actividad (
@@ -78,6 +91,19 @@ VALUES (
         LAST_INSERT_ID(),
         'jpg/yoga.jpg',
         'yoga.jpg'
+    );
+
+-- Contacto para Actividad 2
+INSERT INTO
+    contactar_por (
+        nombre,
+        identificador,
+        actividad_id
+    )
+VALUES (
+        'instagram',
+        '@bienestarsantiago',
+        LAST_INSERT_ID()
     );
 
 -- Actividad 3: Taller de Robótica para Niños en Providencia (tecnología)
@@ -122,6 +148,19 @@ VALUES (
         'robots.jpg'
     );
 
+-- Contacto para Actividad 3
+INSERT INTO
+    contactar_por (
+        nombre,
+        identificador,
+        actividad_id
+    )
+VALUES (
+        'whatsapp',
+        '+56998765432',
+        LAST_INSERT_ID()
+    );
+
 -- Actividad 4: Festival Gastronómico "Sabores de Chile" en Las Condes (comida)
 INSERT INTO
     actividad (
@@ -159,6 +198,19 @@ VALUES (
         LAST_INSERT_ID(),
         'jpg/comida.jpg',
         'comida.jpg'
+    );
+
+-- Contacto para Actividad 4
+INSERT INTO
+    contactar_por (
+        nombre,
+        identificador,
+        actividad_id
+    )
+VALUES (
+        'instagram',
+        '@chilesabor',
+        LAST_INSERT_ID()
     );
 
 -- Actividad 5: Torneo de Ajedrez Rápido en Ñuñoa (juegos)
@@ -200,6 +252,19 @@ VALUES (
         'ajedrez.jpg'
     );
 
+-- Contacto para Actividad 5
+INSERT INTO
+    contactar_por (
+        nombre,
+        identificador,
+        actividad_id
+    )
+VALUES (
+        'telegram',
+        '@ajedreznunoa',
+        LAST_INSERT_ID()
+    );
+
 -- Actividad 6: Noche de Baile Folclórico en Recoleta (baile)
 INSERT INTO
     actividad (
@@ -239,6 +304,19 @@ VALUES (
         'tinku.jpg'
     );
 
+-- Contacto para Actividad 6
+INSERT INTO
+    contactar_por (
+        nombre,
+        identificador,
+        actividad_id
+    )
+VALUES (
+        'whatsapp',
+        '+56934567890',
+        LAST_INSERT_ID()
+    );
+
 -- Actividad 7: Charla "El Universo Cuántico" en Santiago (ciencias)
 INSERT INTO
     actividad (
@@ -276,6 +354,19 @@ VALUES (
         LAST_INSERT_ID(),
         'jpg/universo.jpg',
         'universo.jpg'
+    );
+
+-- Contacto para Actividad 7
+INSERT INTO
+    contactar_por (
+        nombre,
+        identificador,
+        actividad_id
+    )
+VALUES (
+        'X',
+        '@astrodivulgacion',
+        LAST_INSERT_ID()
     );
 
 -- Actividad 8: Bootcamp de Programación Web en Providencia (tecnología)
@@ -318,6 +409,19 @@ VALUES (
         LAST_INSERT_ID(),
         'jpg/computador.jpg',
         'computador.jpg'
+    );
+
+-- Contacto para Actividad 8
+INSERT INTO
+    contactar_por (
+        nombre,
+        identificador,
+        actividad_id
+    )
+VALUES (
+        'whatsapp',
+        '+56945678901',
+        LAST_INSERT_ID()
     );
 
 -- Actividad 9: Día de Voluntariado Ambiental en Las Condes (otro: Medio ambiente)
@@ -367,6 +471,19 @@ VALUES (
         'medioambiente.jpg'
     );
 
+-- Contacto para Actividad 9
+INSERT INTO
+    contactar_por (
+        nombre,
+        identificador,
+        actividad_id
+    )
+VALUES (
+        'instagram',
+        '@voluntariosverdes',
+        LAST_INSERT_ID()
+    );
+
 -- Actividad 10: Sesión de Lectura de Poesía en Ñuñoa (música)
 INSERT INTO
     actividad (
@@ -404,6 +521,19 @@ VALUES (
         LAST_INSERT_ID(),
         'jpg/poesia.jpg',
         'poesia.jpg'
+    );
+
+-- Contacto para Actividad 10
+INSERT INTO
+    contactar_por (
+        nombre,
+        identificador,
+        actividad_id
+    )
+VALUES (
+        'telegram',
+        '@versolibre',
+        LAST_INSERT_ID()
     );
 
 -- Segunda tanda de actividades con nuevas comunas
@@ -445,6 +575,19 @@ VALUES (
         LAST_INSERT_ID(),
         'jpg/bicicleta.jpg',
         'bicicleta.jpg'
+    );
+
+-- Contacto para Actividad 11
+INSERT INTO
+    contactar_por (
+        nombre,
+        identificador,
+        actividad_id
+    )
+VALUES (
+        'whatsapp',
+        '+56977771111',
+        LAST_INSERT_ID()
     );
 
 -- Actividad 12: Feria Artesanal Mapuche en Temuco (Temuco) (otro: Cultura)
@@ -494,6 +637,19 @@ VALUES (
         'mapuche.jpg'
     );
 
+-- Contacto para Actividad 12
+INSERT INTO
+    contactar_por (
+        nombre,
+        identificador,
+        actividad_id
+    )
+VALUES (
+        'instagram',
+        '@rukakimun',
+        LAST_INSERT_ID()
+    );
+
 -- Actividad 13: Taller de Fotografía Desértica (Arica) (ciencias)
 INSERT INTO
     actividad (
@@ -531,6 +687,19 @@ VALUES (
         LAST_INSERT_ID(),
         'jpg/arica.jpg',
         'arica.jpg'
+    );
+
+-- Contacto para Actividad 13
+INSERT INTO
+    contactar_por (
+        nombre,
+        identificador,
+        actividad_id
+    )
+VALUES (
+        'whatsapp',
+        '+56966663333',
+        LAST_INSERT_ID()
     );
 
 -- Actividad 14: Campeonato de Skate en Alto Hospicio (Alto Hospicio) (deporte)
@@ -572,6 +741,19 @@ VALUES (
         'skate.jpg'
     );
 
+-- Contacto para Actividad 14
+INSERT INTO
+    contactar_por (
+        nombre,
+        identificador,
+        actividad_id
+    )
+VALUES (
+        'instagram',
+        '@hospiciostreet',
+        LAST_INSERT_ID()
+    );
+
 -- Actividad 15: Concurso de Cocina Marina en Puerto Montt (Puerto Montt) (comida)
 INSERT INTO
     actividad (
@@ -609,6 +791,19 @@ VALUES (
         LAST_INSERT_ID(),
         'jpg/mariscos.jpg',
         'mariscos.jpg'
+    );
+
+-- Contacto para Actividad 15
+INSERT INTO
+    contactar_por (
+        nombre,
+        identificador,
+        actividad_id
+    )
+VALUES (
+        'whatsapp',
+        '+56944445555',
+        LAST_INSERT_ID()
     );
 
 -- Actividad 16: Recorrido Histórico por Cerros de Valparaíso (Valparaíso) (otro: Patrimonio)
@@ -658,6 +853,19 @@ VALUES (
         'valparaiso.jpg'
     );
 
+-- Contacto para Actividad 16
+INSERT INTO
+    contactar_por (
+        nombre,
+        identificador,
+        actividad_id
+    )
+VALUES (
+        'instagram',
+        '@valpopatrimonial',
+        LAST_INSERT_ID()
+    );
+
 -- Actividad 17: Observación Astronómica en San Fernando (San Fernando) (ciencias)
 INSERT INTO
     actividad (
@@ -695,6 +903,19 @@ VALUES (
         LAST_INSERT_ID(),
         'jpg/universo.jpg',
         'universo.jpg'
+    );
+
+-- Contacto para Actividad 17
+INSERT INTO
+    contactar_por (
+        nombre,
+        identificador,
+        actividad_id
+    )
+VALUES (
+        'whatsapp',
+        '+56922227777',
+        LAST_INSERT_ID()
     );
 
 -- Actividad 18: Festival de Música Chilena en Temuco (Temuco) (música chilena)
@@ -736,6 +957,19 @@ VALUES (
         'cueca.jpg'
     );
 
+-- Contacto para Actividad 18
+INSERT INTO
+    contactar_por (
+        nombre,
+        identificador,
+        actividad_id
+    )
+VALUES (
+        'instagram',
+        '@temucocanta',
+        LAST_INSERT_ID()
+    );
+
 -- Actividad 19: Clase de Surf en Arica (Arica) (deporte)
 INSERT INTO
     actividad (
@@ -773,6 +1007,19 @@ VALUES (
         LAST_INSERT_ID(),
         'jpg/surf.jpg',
         'surf.jpg'
+    );
+
+-- Contacto para Actividad 19
+INSERT INTO
+    contactar_por (
+        nombre,
+        identificador,
+        actividad_id
+    )
+VALUES (
+        'whatsapp',
+        '+56999990000',
+        LAST_INSERT_ID()
     );
 
 -- Actividad 20: Taller de Reparación de Dispositivos Electrónicos en Puerto Montt (Puerto Montt) (tecnología)
@@ -817,6 +1064,19 @@ VALUES (
         'computador.jpg'
     );
 
+-- Contacto para Actividad 20
+INSERT INTO
+    contactar_por (
+        nombre,
+        identificador,
+        actividad_id
+    )
+VALUES (
+        'telegram',
+        '@reparatech',
+        LAST_INSERT_ID()
+    );
+
 -- Actividad 21: Charla sobre Ética y Sociedad (Santiago - Religión)
 INSERT INTO
     actividad (
@@ -856,6 +1116,19 @@ VALUES (
         'religion.png'
     );
 
+-- Contacto para Actividad 21
+INSERT INTO
+    contactar_por (
+        nombre,
+        identificador,
+        actividad_id
+    )
+VALUES (
+        'whatsapp',
+        '+56911223344',
+        LAST_INSERT_ID()
+    );
+
 -- Actividad 22: Foro Abierto: Desafíos Políticos Actuales (Providencia - Política)
 INSERT INTO
     actividad (
@@ -893,6 +1166,19 @@ VALUES (
         LAST_INSERT_ID(),
         'jpg/politica.jpg',
         'politica.jpg'
+    );
+
+-- Contacto para Actividad 22
+INSERT INTO
+    contactar_por (
+        nombre,
+        identificador,
+        actividad_id
+    )
+VALUES (
+        'X',
+        '@ciudadaniaactiva',
+        LAST_INSERT_ID()
     );
 
 SET FOREIGN_KEY_CHECKS = 1;

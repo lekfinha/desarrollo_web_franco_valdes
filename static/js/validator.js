@@ -1,26 +1,39 @@
 // static/js/validator.js
 
-document.addEventListener('DOMContentLoaded', async function () {
-    // 1. Cargar regiones al cargar la página
-    // Esto llamará a /api/regiones y llenará el selector de regiones
-    await loadRegiones();
+document.addEventListener('DOMContentLoaded', function () {
+    // Cargar regiones al inicio
+    loadRegiones();
 
-    // 2. Configurar el event listener para el cambio de región
-    // Cada vez que la región cambie, se llamará a loadComunas para actualizar el selector de comunas
+    // Configurar event listeners
     const regionSelect = document.getElementById('region');
     if (regionSelect) {
         regionSelect.addEventListener('change', loadComunas);
     }
 
-    // --- El resto de tu lógica DOMContentLoaded existente ---
-    // (Asegúrate de que cualquier otra inicialización o listeners que tengas
-    // para los elementos de contacto por, validación de formulario, etc.,
-    // estén aquí dentro de este único DOMContentLoaded)
+    // Mostrar/ocultar campo de otro tema
+    const temaSelect = document.getElementById('tema');
+    const otroTemaInput = document.getElementById('otroTemaInput');
+    if (temaSelect && otroTemaInput) {
+        temaSelect.addEventListener('change', function() {
+            otroTemaInput.style.display = this.value === 'otro' ? 'block' : 'none';
+        });
+    }
 
-    // Aquí iría el código para el botón de submit (si lo tienes en el DOMContentLoaded original)
-    let submitBtn = document.getElementById("submit-button");
-    if (submitBtn) {
-        submitBtn.addEventListener("click", ValidateForm);
+    // Mostrar/ocultar campo de contacto
+    const contactoRadios = document.querySelectorAll('input[name="contacto_red"]');
+    const contactoInfo = document.getElementById('contacto_info');
+    if (contactoRadios && contactoInfo) {
+        contactoRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                contactoInfo.style.display = this.checked ? 'inline-block' : 'none';
+            });
+        });
+    }
+
+    // Validar formulario al enviar
+    const form = document.querySelector('.activity-form');
+    if (form) {
+        form.addEventListener('submit', validateForm);
     }
 });
 
@@ -97,21 +110,142 @@ async function loadComunas() {
     }
 }
 
-// --- Tus funciones de validación existentes (mantenerlas tal cual) ---
-new MultiSelectTag('sports') // Si 'sports' es el ID de tu campo multiselect
+// Funciones de validación
+function validateNombre(nombre) {
+    if (!nombre || nombre.trim().length === 0) {
+        return 'El nombre de la actividad es requerido';
+    }
+    if (nombre.length > 80) {
+        return 'El nombre de la actividad no puede tener más de 80 caracteres';
+    }
+    return '';
+}
 
-// No necesitas re-definir displayRegion y updateComunas aquí.
-// Las funciones asíncronas loadRegiones y loadComunas se encargan de esto.
+function validateEmail(email) {
+    if (!email || email.trim().length === 0) {
+        return 'El email es requerido';
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return 'El email no es válido';
+    }
+    return '';
+}
 
-const ValidateSelect = (value) => { /* ... tu código ... */ };
-const ValidateTextBox80 = (string) => { /* ... tu código ... */ };
-const ValidateSports = (value) => { /* ... tu código ... */ };
-const ValidateEmail = (email) => { /* ... tu código ... */ };
-const ValidateContacto = (contacto) => { /* ... tu código ... */ };
-const ValidateNombre = (nombre) => { /* ... tu código ... */ };
-const validateFotos = (fotos) => { /* ... tu código ... */ };
-const ValidateForm = () => { /* ... tu código ... */ };
+function validateCelular(celular) {
+    if (!celular) return ''; // Es opcional
+    const celularRegex = /^\+569[0-9]{8}$/;
+    if (!celularRegex.test(celular)) {
+        return 'El número de celular debe tener el formato +569XXXXXXXX';
+    }
+    return '';
+}
 
-// Elimina estas líneas duplicadas si estaban fuera del DOMContentLoaded:
-// document.getElementById("region").addEventListener("change", updateComunas);
-// displayRegion(); // Esto ya no es necesario aquí.
+function validateFechaInicio(inicio) {
+    if (!inicio) {
+        return 'La fecha de inicio es requerida';
+    }
+    const fechaInicio = new Date(inicio);
+    const ahora = new Date();
+    if (fechaInicio < ahora) {
+        return 'La fecha de inicio no puede ser en el pasado';
+    }
+    return '';
+}
+
+function validateFechaTermino(inicio, termino) {
+    if (!termino) return ''; // Es opcional
+    const fechaInicio = new Date(inicio);
+    const fechaTermino = new Date(termino);
+    if (fechaTermino <= fechaInicio) {
+        return 'La fecha de término debe ser posterior a la fecha de inicio';
+    }
+    return '';
+}
+
+function validateTema(tema, otroTema) {
+    if (!tema) {
+        return 'El tema es requerido';
+    }
+    if (tema === 'otro' && (!otroTema || otroTema.trim().length === 0)) {
+        return 'Debe especificar el otro tema';
+    }
+    return '';
+}
+
+function validateContacto(contactoRed, contactoInfo) {
+    if (!contactoRed && !contactoInfo) return ''; // Es opcional
+    if (contactoRed && !contactoInfo) {
+        return 'Debe especificar el contacto';
+    }
+    if (contactoInfo && contactoInfo.length > 150) {
+        return 'El contacto no puede tener más de 150 caracteres';
+    }
+    return '';
+}
+
+function validateFotos(fotos) {
+    if (!fotos || fotos.length === 0) return ''; // Es opcional
+    
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+    
+    for (let foto of fotos) {
+        if (foto.size > maxSize) {
+            return 'Las fotos no pueden pesar más de 5MB';
+        }
+        if (!allowedTypes.includes(foto.type)) {
+            return 'Solo se permiten archivos JPG y PNG';
+        }
+    }
+    return '';
+}
+
+function validateForm(event) {
+    event.preventDefault();
+    
+    // Obtener valores del formulario
+    const nombre = document.getElementById('nombre').value;
+    const email = document.getElementById('email').value;
+    const celular = document.getElementById('celular').value;
+    const inicio = document.getElementById('inicio').value;
+    const termino = document.getElementById('termino').value;
+    const tema = document.getElementById('tema').value;
+    const otroTema = document.getElementById('otro_tema').value;
+    const contactoRed = document.querySelector('input[name="contacto_red"]:checked')?.value;
+    const contactoInfo = document.getElementById('contacto_info').value;
+    const fotos = document.getElementById('fotos').files;
+
+    // Realizar validaciones
+    const errores = {
+        nombre: validateNombre(nombre),
+        email: validateEmail(email),
+        celular: validateCelular(celular),
+        inicio: validateFechaInicio(inicio),
+        termino: validateFechaTermino(inicio, termino),
+        tema: validateTema(tema, otroTema),
+        contacto: validateContacto(contactoRed, contactoInfo),
+        fotos: validateFotos(fotos)
+    };
+
+    // Verificar si hay errores
+    const hayErrores = Object.values(errores).some(error => error !== '');
+    
+    if (hayErrores) {
+        // Mostrar errores
+        Object.entries(errores).forEach(([campo, error]) => {
+            if (error) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error';
+                errorDiv.textContent = error;
+                const input = document.getElementById(campo);
+                if (input) {
+                    input.parentNode.appendChild(errorDiv);
+                }
+            }
+        });
+    } else {
+        // Si no hay errores, enviar el formulario
+        event.target.submit();
+    }
+}

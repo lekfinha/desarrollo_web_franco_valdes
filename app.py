@@ -13,7 +13,7 @@ app.config['UPLOAD_FOLDER'] = 'static/uploads'
 @app.route('/')
 def index():
     actividades = []
-    for act in db.get_actividades(0):  
+    for act in db.get_actividades(1):  
         id_a, comuna_id, sector, nombre, email, celular, inicio, termino, descripcion = act
         comuna = db.get_comuna_nombre(comuna_id)
         temas = db.get_temas_actividad(id_a)
@@ -37,9 +37,11 @@ def agregar_actividad():
     comunas = db.get_all_comunas()  
 
     if request.method == 'POST':
+        print("Datos del formulario:", request.form)  # Debug
         errores = validate_actividad_form(request.form, request.files)
 
         if errores:
+            print("Errores de validación:", errores)  # Debug
             return render_template('agregar.html',
                                 errores=errores,
                                 form_data=request.form,
@@ -52,24 +54,29 @@ def agregar_actividad():
             email = request.form['email']
             celular = request.form.get('celular', '')
             inicio = request.form['inicio']
-            termino = request.form.get('termino', '')
+            termino = request.form.get('termino', '') or None
             descripcion = request.form.get('descripcion', '')
             tema_id = request.form['tema']
             otro_tema = request.form.get('otro_tema', '')
             contacto_red = request.form.get('contacto_red', '')
             contacto_info = request.form.get('contacto_info', '')
 
+            print(f"Creando actividad: {nombre} en comuna {comuna_id}")  # Debug
             actividad_id = db.create_actividad(
                 comuna_id, sector, nombre, email, celular,
                 inicio, termino, descripcion
             )
+            print(f"Actividad creada con ID: {actividad_id}")  # Debug
 
             if tema_id == 'otro':
-                db.add_tema_actividad(actividad_id, None, otro_tema)
+                print(f"Agregando tema personalizado: {otro_tema}")  # Debug
+                db.add_tema_actividad(actividad_id, 'otro', otro_tema)
             else:
+                print(f"Agregando tema: {tema_id}")  # Debug
                 db.add_tema_actividad(actividad_id, tema_id)
 
             if contacto_red and contacto_info:
+                print(f"Agregando contacto: {contacto_red} - {contacto_info}")  # Debug
                 db.add_contacto_actividad(actividad_id, contacto_red, contacto_info)
 
             fotos = request.files.getlist('fotos')
@@ -78,6 +85,7 @@ def agregar_actividad():
                     filename = secure_filename(foto.filename)
                     unique_name = f"{datetime.now().timestamp()}_{filename}"
                     filepath = os.path.join('uploads', unique_name)
+                    print(f"Guardando foto: {filepath}")  # Debug
                     foto.save(os.path.join(app.config['UPLOAD_FOLDER'], unique_name))
                     db.add_foto_actividad(actividad_id, filepath, filename)
 
@@ -85,6 +93,7 @@ def agregar_actividad():
             return redirect(url_for('index'))
 
         except Exception as e:
+            print(f"Error al registrar actividad: {str(e)}")  # Debug
             flash(f'Error al registrar actividad: {str(e)}', 'danger')
 
     return render_template('agregar.html', comunas=comunas)
@@ -99,7 +108,7 @@ def listado_actividades(page=1):
     prev_page = page - 1 if page > 1 else None
     
     actividades = []
-    for act in db.get_actividades((page-1)*page_size):
+    for act in db.get_actividades(page):
         id_a, comuna_id, sector, nombre, email, celular, inicio, termino, descripcion = act
         comuna = db.get_comuna_nombre(comuna_id)
         temas = db.get_temas_actividad(id_a)

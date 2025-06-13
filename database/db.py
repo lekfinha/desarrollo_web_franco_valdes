@@ -2,8 +2,8 @@ import pymysql
 import os
 
 DB_NAME = "tarea2"
-DB_USERNAME = "user"
-DB_PASSWORD = "pass"
+DB_USERNAME = "admin"
+DB_PASSWORD = "admin"
 DB_HOST = "localhost"
 DB_PORT = 3306
 DB_CHARSET = "utf8"
@@ -26,16 +26,18 @@ def get_actividades_count():
     count = cursor.fetchone()
     return count[0]
 
-def get_actividades(page_size):
+def get_actividades(page):
     conn = get_conn()
     cursor = conn.cursor()
+    page_size = 5
+    offset = (page - 1) * page_size
     cursor.execute("""
         SELECT a.id, a.comuna_id, a.sector, a.nombre, a.email, a.celular,
         a.dia_hora_inicio AS fecha_inicio, a.dia_hora_termino AS fecha_termino, a.descripcion
         FROM actividad a 
         ORDER BY a.dia_hora_inicio DESC
-        LIMIT %s, 5;
-    """, (page_size,))
+        LIMIT %s, %s;
+    """, (offset, page_size))
     actividades = cursor.fetchall()
     return actividades
 
@@ -146,7 +148,7 @@ def add_contacto_actividad(actividad_id, nombre, valor_contacto):
         INSERT INTO contactar_por 
         (actividad_id, nombre, identificador) 
         VALUES (%s, %s, %s);
-    """, (actividad_id, tipo_contacto, valor_contacto))
+    """, (actividad_id, nombre, valor_contacto))
     conn.commit()
 
 def add_foto_actividad(actividad_id, ruta_archivo, nombre_archivo):
