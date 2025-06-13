@@ -169,3 +169,82 @@ def validate_comuna_region(comuna_id, region_id):
         WHERE id=%s AND region_id=%s;
     """, (comuna_id, region_id))
     return cursor.fetchone() is not None
+
+# Funciones para comentarios
+def add_comentario(nombre, texto, actividad_id):
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute("""
+        INSERT INTO comentario 
+        (nombre, texto, fecha, actividad_id) 
+        VALUES (%s, %s, NOW(), %s);
+    """, (nombre, texto, actividad_id))
+    conn.commit()
+    return cursor.lastrowid
+
+def get_comentarios_actividad(actividad_id):
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT id, nombre, texto, fecha 
+        FROM comentario 
+        WHERE actividad_id = %s 
+        ORDER BY fecha DESC;
+    """, (actividad_id,))
+    comentarios = cursor.fetchall()
+    return comentarios
+
+# Funciones para estadísticas
+def get_actividades_por_dia():
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT DATE(dia_hora_inicio) as fecha, COUNT(*) as total
+        FROM actividad
+        GROUP BY DATE(dia_hora_inicio)
+        ORDER BY fecha;
+    """)
+    return cursor.fetchall()
+
+def get_actividades_por_tema():
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT 
+            CASE 
+                WHEN tema = 'otro' THEN glosa_otro
+                ELSE tema 
+            END as tema,
+            COUNT(*) as total
+        FROM actividad_tema
+        GROUP BY 
+            CASE 
+                WHEN tema = 'otro' THEN glosa_otro
+                ELSE tema 
+            END;
+    """)
+    return cursor.fetchall()
+
+def get_actividades_por_mes_horario():
+    conn = get_conn()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT 
+            DATE_FORMAT(dia_hora_inicio, '%Y-%m') as mes,
+            SUM(CASE 
+                WHEN HOUR(dia_hora_inicio) BETWEEN 6 AND 11 THEN 1 
+                ELSE 0 
+            END) as manana,
+            SUM(CASE 
+                WHEN HOUR(dia_hora_inicio) BETWEEN 12 AND 17 THEN 1 
+                ELSE 0 
+            END) as mediodia,
+            SUM(CASE 
+                WHEN HOUR(dia_hora_inicio) BETWEEN 18 AND 23 THEN 1 
+                ELSE 0 
+            END) as tarde
+        FROM actividad
+        GROUP BY DATE_FORMAT(dia_hora_inicio, '%Y-%m')
+        ORDER BY mes;
+    """)
+    return cursor.fetchall()
