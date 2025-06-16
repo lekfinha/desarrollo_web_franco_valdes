@@ -1,4 +1,4 @@
-# Tarea 2 - Sistema de Registro de Actividades
+# Tarea 2 - Página de Registro de Actividades Sociales
 
 Este sistema permite registrar y gestionar actividades comunitarias, incluyendo su ubicación, detalles de contacto, temas y fotos.
 
