@@ -10,13 +10,12 @@ Aplicación web para gestionar actividades sociales, desarrollada con Flask y My
 - Sistema de comentarios para cada actividad
 - Estadísticas de actividades con gráficos interactivos
 - Paginación de resultados
-- Diseño responsivo
 
 ## Requisitos
 
 - Python 3.8 o superior
 - MySQL 8.0 o superior
-- Navegador web moderno
+- Navegador web
 
 ## Instalación
 
@@ -77,6 +76,7 @@ tarea2/
 ├── database/
 │   ├── db.py             # Funciones de base de datos
 │   ├── tabla-actividad.sql
+│   ├── poblar.sql
 │   └── tabla-comentario.sql
 ├── static/
 │   ├── css/
@@ -137,16 +137,3 @@ tarea2/
 ### Comentarios
 - Nombre: 3-80 caracteres
 - Texto: mínimo 5 caracteres, máximo 300 caracteres
-
-## Tecnologías Utilizadas
-
-- Backend: Python, Flask
-- Base de datos: MySQL
-- Frontend: HTML5, CSS3, JavaScript
-- Gráficos: Highcharts
-- Validación: JavaScript, Python
-- Estilos: CSS
-
-## Autor
-
-Franco Valdés
