@@ -1,4 +1,4 @@
-#!/home/miauuu/Universidad/2025-1/Web/Tareas/tarea2/venv/bin/python3
+#!/home/miauuu/Universidad/desarrollo_web_franco_valdes/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

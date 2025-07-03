@@ -5,6 +5,7 @@ import os
 from werkzeug.utils import secure_filename
 import math
 from datetime import datetime
+import html
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -162,8 +163,8 @@ def api_get_comentarios(actividad_id):
     comentarios = db.get_comentarios_actividad(actividad_id)
     return jsonify([{
         'id': id,
-        'nombre': nombre,
-        'texto': texto,
+        'nombre': html.escape(nombre),
+        'texto': html.escape(texto),
         'fecha': fecha.strftime('%Y-%m-%d %H:%M:%S')
     } for id, nombre, texto, fecha in comentarios])
 
@@ -180,7 +181,9 @@ def api_add_comentario(actividad_id):
         return jsonify({'error': 'El comentario debe tener al menos 5 caracteres'}), 400
     
     try:
-        db.add_comentario(nombre, texto, actividad_id)
+        nombre_sanitized = html.escape(nombre)
+        texto_sanitized = html.escape(texto)
+        db.add_comentario(nombre_sanitized, texto_sanitized, actividad_id)
         return jsonify({'success': True})
     except Exception as e:
         return jsonify({'error': str(e)}), 500

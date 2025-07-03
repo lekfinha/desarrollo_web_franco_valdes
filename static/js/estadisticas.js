@@ -60,37 +60,43 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-    // Cargar datos para el gráfico de barras
-    fetch('/api/estadisticas/actividades-por-mes-horario')
-        .then(response => response.json())
-        .then(data => {
-            Highcharts.chart('grafico-barras', {
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: 'Actividades por Mes y Horario'
-                },
-                xAxis: {
-                    categories: data.map(item => item.mes)
-                },
-                yAxis: {
-                    title: {
-                        text: 'Cantidad de Actividades'
-                    }
-                },
-                series: [{
-                    name: 'Mañana',
-                    data: data.map(item => item.manana)
-                }, {
-                    name: 'Mediodía',
-                    data: data.map(item => item.mediodia)
-                }, {
-                    name: 'Tarde',
-                    data: data.map(item => item.tarde)
-                }]
-            });
+        // Cargar datos para el gráfico de barras
+    fetch("/api/estadisticas/actividades-por-mes-horario")
+      .then((response) => response.json())
+      .then((data) => {
+        // Prepara los datos y convierte a número
+        const meses = data.map(item => item.mes);
+        const manana = data.map(item => Number(item.manana));
+        const mediodia = data.map(item => Number(item.mediodia));
+        const tarde = data.map(item => Number(item.tarde));
+
+        Highcharts.chart('grafico-barras', {
+          chart: {
+            type: 'column',
+            backgroundColor: 'transparent'
+          },
+          title: {
+            text: 'Actividades por Mes y Horario',
+            style: { color: 'white', fontSize: '24px' }
+          },
+          xAxis: {
+            categories: meses,
+            title: { text: 'Mes' }
+          },
+          yAxis: {
+            min: 0,
+            title: { text: 'Cantidad de Actividades' }
+          },
+          legend: { reversed: false },
+          plotOptions: { series: { stacking: 'normal' } },
+          series: [
+            { name: 'Mañana', data: manana },
+            { name: 'Mediodía', data: mediodia },
+            { name: 'Tarde', data: tarde }
+          ]
         });
+      })
+      .catch((error) => console.error("Error:", error));
 });
 
 Highcharts.chart('container2', {

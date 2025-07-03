@@ -26,10 +26,11 @@
             <div id="grafico-barras" style="width:100%; height:400px;"></div>
         </div>
     </div>
+</div>
 
-    <div class="volver-container">
-        <a href="{{ url_for('index') }}" class="btn btn-primary">Volver a Portada</a>
-    </div>
+<!-- Botón al pie de la página -->
+<div class="volver-container" style="margin-top: 40px; text-align: center;">
+    <a href="{{ url_for('index') }}" class="btn btn-primary">Volver a Portada</a>
 </div>
 
 {% block javascript %}

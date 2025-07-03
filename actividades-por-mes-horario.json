@@ -1,0 +1,38 @@
+[
+  {
+    "manana": "1",
+    "mediodia": "0",
+    "mes": "2025-05",
+    "tarde": "1"
+  },
+  {
+    "manana": "2",
+    "mediodia": "1",
+    "mes": "2025-06",
+    "tarde": "2"
+  },
+  {
+    "manana": "2",
+    "mediodia": "0",
+    "mes": "2025-07",
+    "tarde": "1"
+  },
+  {
+    "manana": "2",
+    "mediodia": "3",
+    "mes": "2025-08",
+    "tarde": "0"
+  },
+  {
+    "manana": "2",
+    "mediodia": "1",
+    "mes": "2025-09",
+    "tarde": "1"
+  },
+  {
+    "manana": "0",
+    "mediodia": "1",
+    "mes": "2025-10",
+    "tarde": "2"
+  }
+]
