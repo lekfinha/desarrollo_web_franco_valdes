@@ -11,10 +11,10 @@
                 <h1 th:text="${actividad.nombre}">Título de la Actividad</h1>
                 
                 <!-- Galería de fotos -->
-                <div class="galeria-fotos" th:if="${actividad.fotos != null and !actividad.fotos.empty}">
+                <div class="galeria-fotos" th:if="${fotos != null and !fotos.empty}">
                     <h3>Fotos de la Actividad</h3>
                     <div class="fotos-grid">
-                        <div th:each="foto : ${actividad.fotos}" class="foto-item">
+                        <div th:each="foto : ${fotos}" class="foto-item">
                             <img th:src="@{/{ruta}(ruta=${foto.rutaArchivo})}" 
                                  th:alt="${foto.descripcion}" 
                                  class="foto-actividad">

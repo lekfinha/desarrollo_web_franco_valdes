@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.List;
+import com.tarea_web.tarea_web.models.Foto;
 
 @Data
 @Entity
@@ -36,7 +37,7 @@ public class Actividad {
     private LocalDateTime diaHoraTermino;
 
     private String descripcion;
-
+    
     @Transient
     private List<Foto> fotos;
 }

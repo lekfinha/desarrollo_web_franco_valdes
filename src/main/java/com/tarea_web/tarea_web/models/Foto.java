@@ -18,5 +18,8 @@ public class Foto {
     @Column(name = "ruta_archivo", nullable = false)
     private String rutaArchivo;
 
+    @Column(name = "nombre_archivo", nullable = false)
+    private String nombreArchivo;
+
     private String descripcion;
 } 
