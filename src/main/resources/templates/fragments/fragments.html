@@ -4,12 +4,19 @@
     <meta charset="UTF-8">
     <title th:text="${title}">Título por defecto</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/tablas.css}">
+    <link rel="stylesheet" th:href="@{/css/fotos.css}">
+    <link rel="stylesheet" th:href="@{/css/form.css}">
 </head>
 <body>
     <header th:fragment="header">
         <nav>
-            <a th:href="@{/}">Inicio</a>
-            <a th:href="@{/actividades}">Actividades</a>
+            <div class="nav-links">
+                <ul>
+                    <li><a th:href="@{/}">Inicio</a></li>
+                    <li><a th:href="@{/actividades}">Actividades</a></li>
+                </ul>
+            </div>
         </nav>
     </header>
     <footer th:fragment="footer">

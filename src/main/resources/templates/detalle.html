@@ -1,34 +1,80 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/fragments :: head('Detalle de Actividad')"></head>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/fragments :: head('Detalle de Actividad')}">
+</head>
 <body>
-    <div th:replace="fragments/fragments :: header"></div>
     <div class="main">
-        <h1 th:text="${actividad.nombre}">Nombre Actividad</h1>
-        <p><strong>Comuna:</strong> <span th:text="${actividad.comuna.nombre}"></span></p>
-        <p><strong>Sector:</strong> <span th:text="${actividad.sector}"></span></p>
-        <p><strong>Descripción:</strong> <span th:text="${actividad.descripcion}"></span></p>
-        <p><strong>Inicio:</strong> <span th:text="${actividad.diaHoraInicio}"></span></p>
-        <p><strong>Término:</strong> <span th:text="${actividad.diaHoraTermino}"></span></p>
-        <!-- Fotos -->
-        <div>
-            <h2>Fotos</h2>
-            <img th:each="foto : ${actividad.fotos}" th:src="@{${foto}}" width="200" alt="Foto">
+        <div th:replace="~{fragments/fragments :: header}"></div>
+        
+        <div class="container">
+            <div class="detalle-actividad" th:if="${actividad != null}">
+                <h1 th:text="${actividad.nombre}">Título de la Actividad</h1>
+                
+                <!-- Galería de fotos -->
+                <div class="galeria-fotos" th:if="${actividad.fotos != null and !actividad.fotos.empty}">
+                    <h3>Fotos de la Actividad</h3>
+                    <div class="fotos-grid">
+                        <div th:each="foto : ${actividad.fotos}" class="foto-item">
+                            <img th:src="@{/{ruta}(ruta=${foto.rutaArchivo})}" 
+                                 th:alt="${foto.descripcion}" 
+                                 class="foto-actividad">
+                            <p th:text="${foto.descripcion}" class="descripcion-foto"></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Información de la actividad -->
+                <div class="info-actividad">
+                    <div class="info-item">
+                        <strong>Descripción:</strong>
+                        <p th:text="${actividad.descripcion}">Descripción de la actividad</p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <strong>Fecha y Hora de Inicio:</strong>
+                        <p th:text="${#temporals.format(actividad.diaHoraInicio, 'dd/MM/yyyy HH:mm')}">Fecha de inicio</p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <strong>Fecha y Hora de Término:</strong>
+                        <p th:text="${#temporals.format(actividad.diaHoraTermino, 'dd/MM/yyyy HH:mm')}">Fecha de término</p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <strong>Comuna:</strong>
+                        <p th:text="${actividad.comuna.nombre}">Nombre de la comuna</p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <strong>Sector:</strong>
+                        <p th:text="${actividad.sector}">Sector de la actividad</p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <strong>Email:</strong>
+                        <p th:text="${actividad.email}">Email de contacto</p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <strong>Celular:</strong>
+                        <p th:text="${actividad.celular}">Número de celular</p>
+                    </div>
+                </div>
+                
+                <!-- Botones de acción -->
+                <div class="acciones">
+                    <a href="/" class="btn btn-secondary">Volver al Inicio</a>
+                    <a th:href="@{/actividades}" class="btn btn-primary">Ver Todas las Actividades</a>
+                </div>
+            </div>
+            
+            <!-- Mensaje si no se encuentra la actividad -->
+            <div class="error-mensaje" th:if="${actividad == null}">
+                <h2>Actividad no encontrada</h2>
+                <p>La actividad que buscas no existe o ha sido eliminada.</p>
+                <a href="/" class="btn btn-primary">Volver al Inicio</a>
+            </div>
         </div>
-        <!-- Comentarios -->
-        <h2>Comentarios</h2>
-        <ul>
-            <li th:each="comentario : ${actividad.comentarios}">
-                <span th:text="${comentario.nombre}"></span>: <span th:text="${comentario.texto}"></span>
-            </li>
-        </ul>
-        <!-- Formulario para agregar comentario -->
-        <form th:action="@{/detalle/{id}/comentario(id=${actividad.id})}" method="post" th:object="${comentarioForm}">
-            <input type="text" th:field="*{nombre}" placeholder="Tu nombre" required>
-            <textarea th:field="*{texto}" placeholder="Comentario" required></textarea>
-            <button type="submit">Agregar comentario</button>
-        </form>
     </div>
-    <div th:replace="fragments/fragments :: footer"></div>
 </body>
 </html>
