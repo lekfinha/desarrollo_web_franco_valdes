@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/fragments :: head('Estadísticas')">
+    <link rel="stylesheet" th:href="@{/css/estadisticas.css}">
+</head>
+<body>
+    <div th:replace="fragments/fragments :: header"></div>
+    <div class="main">
+        <h1>Estadísticas</h1>
+        <!-- Ejemplo: tabla de actividades por comuna -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Comuna</th>
+                    <th>Cantidad de actividades</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="stat : ${estadisticas}">
+                    <td th:text="${stat.comuna}"></td>
+                    <td th:text="${stat.cantidad}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- Aquí puedes agregar gráficos usando JS si lo necesitas -->
+        <script th:src="@{/js/estadisticas.js}"></script>
+    </div>
+    <div th:replace="fragments/fragments :: footer"></div>
+</body>
+</html>

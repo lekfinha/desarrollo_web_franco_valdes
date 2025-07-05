@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <title th:text="${title}">Título por defecto</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header th:fragment="header">
+        <nav>
+            <a th:href="@{/}">Inicio</a>
+            <a th:href="@{/actividades}">Actividades</a>
+        </nav>
+    </header>
+    <footer th:fragment="footer">
+        <p>&copy; 2025 Tu Sitio</p>
+    </footer>
+</body>
+</html>

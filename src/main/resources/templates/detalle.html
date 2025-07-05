@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/fragments :: head('Detalle de Actividad')"></head>
+<body>
+    <div th:replace="fragments/fragments :: header"></div>
+    <div class="main">
+        <h1 th:text="${actividad.nombre}">Nombre Actividad</h1>
+        <p><strong>Comuna:</strong> <span th:text="${actividad.comuna.nombre}"></span></p>
+        <p><strong>Sector:</strong> <span th:text="${actividad.sector}"></span></p>
+        <p><strong>Descripción:</strong> <span th:text="${actividad.descripcion}"></span></p>
+        <p><strong>Inicio:</strong> <span th:text="${actividad.diaHoraInicio}"></span></p>
+        <p><strong>Término:</strong> <span th:text="${actividad.diaHoraTermino}"></span></p>
+        <!-- Fotos -->
+        <div>
+            <h2>Fotos</h2>
+            <img th:each="foto : ${actividad.fotos}" th:src="@{${foto}}" width="200" alt="Foto">
+        </div>
+        <!-- Comentarios -->
+        <h2>Comentarios</h2>
+        <ul>
+            <li th:each="comentario : ${actividad.comentarios}">
+                <span th:text="${comentario.nombre}"></span>: <span th:text="${comentario.texto}"></span>
+            </li>
+        </ul>
+        <!-- Formulario para agregar comentario -->
+        <form th:action="@{/detalle/{id}/comentario(id=${actividad.id})}" method="post" th:object="${comentarioForm}">
+            <input type="text" th:field="*{nombre}" placeholder="Tu nombre" required>
+            <textarea th:field="*{texto}" placeholder="Comentario" required></textarea>
+            <button type="submit">Agregar comentario</button>
+        </form>
+    </div>
+    <div th:replace="fragments/fragments :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/fragments :: head('SocialAct - Actividades Recreativas')">
+    <link rel="stylesheet" th:href="@{/css/tablas.css}">
+</head>
+<body>
+    <div th:replace="fragments/fragments :: header"></div>
+    <div class="main">
+        <div class="centered">
+            <h1>Últimas Actividades Recreativas</h1>
+            <table>
+                <tr>
+                    <th>Inicio</th>
+                    <th>Comuna</th>
+                    <th>Nombre</th>
+                    <th>Foto</th>
+                </tr>
+                <tr th:each="actividad : ${actividades}" th:onclick="|window.location='@{/detalle/{id}(id=${actividad.id})}'|">
+                    <td th:text="${actividad.inicio}"></td>
+                    <td th:text="${actividad.comuna}"></td>
+                    <td th:text="${actividad.nombre}"></td>
+                    <td>
+                        <img th:if="${actividad.fotos != null and #lists.size(actividad.fotos) > 0}"
+                             th:src="@{${actividad.fotos[0]}}" alt="Foto" class="thumbnail" width="100" height="80">
+                        <span th:if="${actividad.fotos == null or #lists.size(actividad.fotos) == 0}">Sin foto</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div th:replace="fragments/fragments :: footer"></div>
+</body>
+</html>

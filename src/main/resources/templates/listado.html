@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/fragments :: head('Listado de Actividades')">
+    <link rel="stylesheet" th:href="@{/css/tablas.css}">
+</head>
+<body>
+    <div th:replace="fragments/fragments :: header"></div>
+    <div class="main">
+        <h1>Listado de Actividades</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Inicio</th>
+                    <th>Comuna</th>
+                    <th>Nombre</th>
+                    <th>Foto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="actividad : ${actividades}" th:onclick="|window.location='@{/detalle/{id}(id=${actividad.id})}'|">
+                    <td th:text="${actividad.diaHoraInicio}"></td>
+                    <td th:text="${actividad.comuna.nombre}"></td>
+                    <td th:text="${actividad.nombre}"></td>
+                    <td>
+                        <img th:if="${actividad.fotos != null and #lists.size(actividad.fotos) > 0}"
+                             th:src="@{${actividad.fotos[0]}}" alt="Foto" class="thumbnail" width="100" height="80">
+                        <span th:if="${actividad.fotos == null or #lists.size(actividad.fotos) == 0}">Sin foto</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:replace="fragments/fragments :: footer"></div>
+</body>
+</html>
