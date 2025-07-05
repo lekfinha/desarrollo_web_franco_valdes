@@ -10,6 +10,8 @@ import com.tarea_web.tarea_web.models.Comuna;
 import com.tarea_web.tarea_web.repository.FotoRepository;
 import com.tarea_web.tarea_web.repository.ComunaRepository;
 import com.tarea_web.tarea_web.models.Foto;
+import com.tarea_web.tarea_web.models.Comentario;
+import com.tarea_web.tarea_web.repository.ComentarioRepository;
 
 import java.util.List;
 import java.io.IOException;
@@ -17,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
+import java.time.LocalDateTime;
 
 @Controller
 public class ActividadController {
@@ -24,13 +27,16 @@ public class ActividadController {
     private final ActividadService actividadService;
     private final ComunaRepository comunaRepository;
     private final FotoRepository fotoRepository;
+    private final ComentarioRepository comentarioRepository;
 
     public ActividadController(ActividadService actividadService, 
                              ComunaRepository comunaRepository,
-                             FotoRepository fotoRepository) {
+                             FotoRepository fotoRepository,
+                             ComentarioRepository comentarioRepository) {
         this.actividadService = actividadService;
         this.comunaRepository = comunaRepository;
         this.fotoRepository = fotoRepository;
+        this.comentarioRepository = comentarioRepository;
     }
 
     @GetMapping("/")
@@ -44,14 +50,47 @@ public class ActividadController {
             actividad.setFotos(fotos);
         }
         
-        model.addAttribute("actividades", actividades);
+        // Limitar a las últimas 3 actividades más recientes
+        List<Actividad> ultimasActividades = actividades.stream()
+            .sorted((a1, a2) -> a2.getDiaHoraInicio().compareTo(a1.getDiaHoraInicio()))
+            .limit(3)
+            .toList();
+        
+        model.addAttribute("actividades", ultimasActividades);
         return "index";
     }
 
     @GetMapping("/actividades")
-    public String listarActividades(Model model) {
-        List<Actividad> actividades = actividadService.getTodas();
-        model.addAttribute("actividades", actividades);
+    public String listarActividades(@RequestParam(defaultValue = "0") int pagina, Model model) {
+        List<Actividad> todasActividades = actividadService.getTodas();
+        
+        // Para cada actividad, obtener sus fotos
+        for (Actividad actividad : todasActividades) {
+            List<Foto> fotos = fotoRepository.findByActividadId(actividad.getId());
+            actividad.setFotos(fotos);
+        }
+        
+        // Ordenar por fecha más reciente
+        List<Actividad> actividadesOrdenadas = todasActividades.stream()
+            .sorted((a1, a2) -> a2.getDiaHoraInicio().compareTo(a1.getDiaHoraInicio()))
+            .toList();
+        
+        int actividadesPorPagina = 5;
+        int totalActividades = actividadesOrdenadas.size();
+        int totalPaginas = (int) Math.ceil((double) totalActividades / actividadesPorPagina);
+        
+        // Calcular el rango de actividades para la página actual
+        int inicio = pagina * actividadesPorPagina;
+        int fin = Math.min(inicio + actividadesPorPagina, totalActividades);
+        
+        List<Actividad> actividadesPagina = actividadesOrdenadas.subList(inicio, fin);
+        
+        model.addAttribute("actividades", actividadesPagina);
+        model.addAttribute("paginaActual", pagina);
+        model.addAttribute("totalPaginas", totalPaginas);
+        model.addAttribute("totalActividades", totalActividades);
+        model.addAttribute("actividadesPorPagina", actividadesPorPagina);
+        
         return "listado";
     }
 
@@ -60,8 +99,12 @@ public class ActividadController {
         Actividad actividad = actividadService.getPorId(id);
         if (actividad != null) {
             List<Foto> fotos = fotoRepository.findByActividadId(id);
+            List<Comentario> comentarios = comentarioRepository.findByActividadIdOrderByFechaDesc(id);
+            
             model.addAttribute("actividad", actividad);
             model.addAttribute("fotos", fotos);
+            model.addAttribute("comentarios", comentarios);
+            model.addAttribute("nuevoComentario", new Comentario());
             return "detalle";
         }
         return "redirect:/";
@@ -114,5 +157,22 @@ public class ActividadController {
             e.printStackTrace();
             return "redirect:/agregar?error=true";
         }
+    }
+    
+    @PostMapping("/detalle/{id}/comentario")
+    public String agregarComentario(@PathVariable Integer id, 
+                                   @ModelAttribute("nuevoComentario") Comentario comentario) {
+        Actividad actividad = actividadService.getPorId(id);
+        if (actividad != null) {
+            // Crear un nuevo comentario en lugar de usar el objeto del modelo
+            Comentario nuevoComentario = new Comentario();
+            nuevoComentario.setNombre(comentario.getNombre());
+            nuevoComentario.setTexto(comentario.getTexto());
+            nuevoComentario.setActividad(actividad);
+            nuevoComentario.setFecha(LocalDateTime.now());
+            
+            comentarioRepository.save(nuevoComentario);
+        }
+        return "redirect:/detalle/" + id;
     }
 }

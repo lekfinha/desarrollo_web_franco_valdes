@@ -6,6 +6,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.List;
 import com.tarea_web.tarea_web.models.Foto;
+import com.tarea_web.tarea_web.models.Comentario;
 
 @Data
 @Entity
@@ -40,4 +41,7 @@ public class Actividad {
     
     @Transient
     private List<Foto> fotos;
+    
+    @OneToMany(mappedBy = "actividad", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Comentario> comentarios;
 }

@@ -3,22 +3,22 @@
 <head th:replace="~{fragments/fragments :: head('SocialAct - Actividades Recreativas')}">
 </head>
 <body>
-    <div class="main">
+<div class="main">
         <div th:replace="~{fragments/fragments :: header}"></div>
-        <div class="centered">
-            <h1>Últimas Actividades Recreativas</h1>
-            <table>
-                <tr>
-                    <th>Inicio</th>
-                    <th>Comuna</th>
+    <div class="centered">
+        <h1>Últimas Actividades Recreativas</h1>
+        <table>
+            <tr>
+                <th>Inicio</th>
+                <th>Comuna</th>
                     <th>Nombre</th>
-                    <th>Foto</th>
-                </tr>
+                <th>Foto</th>
+            </tr>
                 <tr th:each="actividad : ${actividades}" th:onclick="|window.location='@{/detalle/{id}(id=${actividad.id})}'|">
                     <td th:text="${#temporals.format(actividad.diaHoraInicio, 'dd/MM/yyyy HH:mm')}"></td>
                     <td th:text="${actividad.comuna.nombre}"></td>
                     <td th:text="${actividad.nombre}"></td>
-                    <td>
+                <td>
                         <div th:if="${actividad.fotos != null and !actividad.fotos.empty}">
                             <img th:src="@{/{ruta}(ruta=${actividad.fotos[0].rutaArchivo})}" 
                                  th:alt="${actividad.fotos[0].descripcion}" 
@@ -27,11 +27,11 @@
                         <div th:if="${actividad.fotos == null or actividad.fotos.empty}">
                             <span>Sin foto</span>
                         </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
+                </td>
+            </tr>
+        </table>
     </div>
+</div>
     <div th:replace="~{fragments/fragments :: footer}"></div>
 </body>
 </html>
