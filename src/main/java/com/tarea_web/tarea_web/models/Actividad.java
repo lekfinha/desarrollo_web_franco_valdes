@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import com.tarea_web.tarea_web.models.Foto;
 import com.tarea_web.tarea_web.models.Comentario;
+import com.tarea_web.tarea_web.models.Nota;
 
 @Data
 @Entity
@@ -44,4 +45,7 @@ public class Actividad {
     
     @OneToMany(mappedBy = "actividad", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comentario> comentarios;
+    
+    @OneToMany(mappedBy = "actividad", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Nota> notas;
 }

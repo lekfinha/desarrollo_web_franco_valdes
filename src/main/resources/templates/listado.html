@@ -5,40 +5,55 @@
 <body>
     <div class="main">
         <div th:replace="~{fragments/fragments :: header}"></div>
-        <div class="centered">
+<div class="centered">
             <h1>Listado de Actividades</h1>
             <table>
                 <thead>
-                    <tr>
-                        <th>Inicio</th>
-                        <th>Comuna</th>
-                        <th>Nombre</th>
-                        <th>Foto</th>
-                    </tr>
+        <tr>
+            <th>Inicio</th>
+            <th>Comuna</th>
+            <th>Nombre</th>
+            <th>Foto</th>
+            <th>Nota</th>
+            <th>Evaluar</th>
+        </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="actividad : ${actividades}" th:onclick="|window.location='@{/detalle/{id}(id=${actividad.id})}'|">
-                        <td th:text="${#temporals.format(actividad.diaHoraInicio, 'dd/MM/yyyy HH:mm')}"></td>
-                        <td th:text="${actividad.comuna.nombre}"></td>
-                        <td th:text="${actividad.nombre}"></td>
+                    <tr th:each="actividadConNota : ${actividadesConNotas}" 
+                        th:onclick="|window.location='@{/detalle/{id}(id=${actividadConNota.actividad.id})}'|"
+                        style="cursor: pointer;">
+                        <td th:text="${#temporals.format(actividadConNota.actividad.diaHoraInicio, 'dd/MM/yyyy HH:mm')}"></td>
+                        <td th:text="${actividadConNota.actividad.comuna.nombre}"></td>
+                        <td th:text="${actividadConNota.actividad.nombre}"></td>
                         <td>
-                            <div th:if="${actividad.fotos != null and !actividad.fotos.empty}">
-                                <img th:src="@{/{ruta}(ruta=${actividad.fotos[0].rutaArchivo})}" 
-                                     th:alt="${actividad.fotos[0].descripcion}" 
+                            <div th:if="${actividadConNota.actividad.fotos != null and !actividadConNota.actividad.fotos.empty}">
+                                <img th:src="@{/{ruta}(ruta=${actividadConNota.actividad.fotos[0].rutaArchivo})}" 
+                                     th:alt="${actividadConNota.actividad.fotos[0].descripcion}" 
                                      style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;">
                             </div>
-                            <div th:if="${actividad.fotos == null or actividad.fotos.empty}">
+                            <div th:if="${actividadConNota.actividad.fotos == null or actividadConNota.actividad.fotos.empty}">
                                 <span>Sin foto</span>
                             </div>
                         </td>
+                        <td class="nota-cell" th:data-actividad-id="${actividadConNota.actividad.id}" th:text="${actividadConNota.nota}">-</td>
+                        <td>
+                            <button th:if="${actividadConNota.puedeEvaluar}" 
+                                    class="btn-evaluar" 
+                                    th:data-actividad-id="${actividadConNota.actividad.id}" 
+                                    th:data-actividad-nombre="${actividadConNota.actividad.nombre}"
+                                    onclick="event.stopPropagation(); abrirModalEvaluacion(this)">
+                                Evaluar
+                            </button>
+                            <span th:if="${!actividadConNota.puedeEvaluar}" class="no-evaluable">No evaluable</span>
+                        </td>
                     </tr>
                 </tbody>
-            </table>
+    </table>
             
             <!-- Paginación -->
             <div class="pagination" th:if="${totalPaginas > 1}">
                 <div class="pagination-info">
-                    <span th:text="'Mostrando ' + ${#lists.size(actividades)} + ' de ' + ${totalActividades} + ' actividades'"></span>
+                    <span th:text="'Mostrando ' + ${#lists.size(actividadesConNotas)} + ' de ' + ${totalActividades} + ' actividades'"></span>
                 </div>
                 <div class="pagination-controls">
                     <!-- Botón Anterior -->
@@ -64,7 +79,38 @@
                 </div>
             </div>
         </div>
+</div>
+
+    <!-- Modal para evaluar -->
+    <div id="modal-evaluacion" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Evaluar Actividad</h2>
+            <p id="actividad-nombre"></p>
+            <form id="form-evaluacion">
+                <div class="form-group">
+                    <label for="nota">Selecciona una nota (1-7):</label>
+                    <select id="nota" name="nota" required>
+                        <option value="">Selecciona una nota</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Guardar Evaluación</button>
+                    <button type="button" class="btn-secondary" onclick="cerrarModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
     </div>
+
     <div th:replace="~{fragments/fragments :: footer}"></div>
+    
+    <script th:src="@{/js/evaluaciones.js}"></script>
 </body>
 </html>

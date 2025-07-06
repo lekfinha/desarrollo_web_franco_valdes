@@ -1,30 +1,125 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/fragments :: head('Estadísticas')">
+<head>
+    <meta charset="UTF-8">
+    <title>Estadísticas - SocialAct</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/tablas.css}">
+    <link rel="stylesheet" th:href="@{/css/fotos.css}">
+    <link rel="stylesheet" th:href="@{/css/form.css}">
+    <link rel="stylesheet" th:href="@{/css/comentarios.css}">
     <link rel="stylesheet" th:href="@{/css/estadisticas.css}">
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 </head>
 <body>
-    <div th:replace="fragments/fragments :: header"></div>
     <div class="main">
-        <h1>Estadísticas</h1>
-        <!-- Ejemplo: tabla de actividades por comuna -->
-        <table>
-            <thead>
-                <tr>
-                    <th>Comuna</th>
-                    <th>Cantidad de actividades</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="stat : ${estadisticas}">
-                    <td th:text="${stat.comuna}"></td>
-                    <td th:text="${stat.cantidad}"></td>
-                </tr>
-            </tbody>
-        </table>
-        <!-- Aquí puedes agregar gráficos usando JS si lo necesitas -->
-        <script th:src="@{/js/estadisticas.js}"></script>
+        <div th:replace="~{fragments/fragments :: header}"></div>
+        
+<div class="container">
+    <h1>Estadísticas de Actividades</h1>
+    
+            <!-- Resumen de estadísticas -->
+            <div class="stats-summary">
+                <div class="stat-card">
+                    <h3>Total de Actividades</h3>
+                    <p class="stat-number" th:text="${totalActividades}">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total de Comentarios</h3>
+                    <p class="stat-number" th:text="${totalComentarios}">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total de Fotos</h3>
+                    <p class="stat-number" th:text="${totalFotos}">0</p>
+                </div>
+            </div>
+            
+            <!-- Gráficos -->
+            <div class="charts-container">
+                <!-- Gráfico de líneas - Actividades por día -->
+                <div class="chart-section">
+            <h2>Actividades por Día</h2>
+                    <div id="grafico-lineas" class="chart"></div>
+        </div>
+
+                <!-- Gráfico de torta - Actividades por tema -->
+                <div class="chart-section">
+            <h2>Actividades por Tema</h2>
+                    <div id="grafico-torta" class="chart"></div>
+        </div>
+
+                <!-- Gráfico de barras - Actividades por mes y horario -->
+                <div class="chart-section">
+            <h2>Actividades por Mes y Horario</h2>
+                    <div id="grafico-barras" class="chart"></div>
+                </div>
+            </div>
+            
+            <!-- Tablas de datos -->
+            <div class="tables-container">
+                <!-- Actividades por comuna -->
+                <div class="table-section">
+                    <h2>Actividades por Comuna</h2>
+                    <table class="stats-table">
+                        <thead>
+                            <tr>
+                                <th>Comuna</th>
+                                <th>Cantidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="entry : ${actividadesPorComuna.entrySet()}">
+                                <td th:text="${entry.key}">Comuna</td>
+                                <td th:text="${entry.value}">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Actividades por mes -->
+                <div class="table-section">
+                    <h2>Actividades por Mes</h2>
+                    <table class="stats-table">
+                        <thead>
+                            <tr>
+                                <th>Mes</th>
+                                <th>Cantidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="entry : ${actividadesPorMes.entrySet()}">
+                                <td th:text="${entry.key}">Mes</td>
+                                <td th:text="${entry.value}">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Actividades por horario -->
+                <div class="table-section">
+                    <h2>Actividades por Horario</h2>
+                    <table class="stats-table">
+                        <thead>
+                            <tr>
+                                <th>Horario</th>
+                                <th>Cantidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="entry : ${actividadesPorHorario.entrySet()}">
+                                <td th:text="${entry.key}">Horario</td>
+                                <td th:text="${entry.value}">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+        </div>
     </div>
-    <div th:replace="fragments/fragments :: footer"></div>
+</div>
+
+    <script th:src="@{/js/estadisticas.js}"></script>
 </body>
 </html>

@@ -9,11 +9,14 @@ import com.tarea_web.tarea_web.models.Actividad;
 import com.tarea_web.tarea_web.models.Comuna;
 import com.tarea_web.tarea_web.repository.FotoRepository;
 import com.tarea_web.tarea_web.repository.ComunaRepository;
+import com.tarea_web.tarea_web.repository.NotaRepository;
 import com.tarea_web.tarea_web.models.Foto;
 import com.tarea_web.tarea_web.models.Comentario;
 import com.tarea_web.tarea_web.repository.ComentarioRepository;
 
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -23,20 +26,23 @@ import java.time.LocalDateTime;
 
 @Controller
 public class ActividadController {
-
+    
     private final ActividadService actividadService;
     private final ComunaRepository comunaRepository;
     private final FotoRepository fotoRepository;
     private final ComentarioRepository comentarioRepository;
+    private final NotaRepository notaRepository;
 
     public ActividadController(ActividadService actividadService, 
                              ComunaRepository comunaRepository,
                              FotoRepository fotoRepository,
-                             ComentarioRepository comentarioRepository) {
+                             ComentarioRepository comentarioRepository,
+                             NotaRepository notaRepository) {
         this.actividadService = actividadService;
         this.comunaRepository = comunaRepository;
         this.fotoRepository = fotoRepository;
         this.comentarioRepository = comentarioRepository;
+        this.notaRepository = notaRepository;
     }
 
     @GetMapping("/")
@@ -64,10 +70,21 @@ public class ActividadController {
     public String listarActividades(@RequestParam(defaultValue = "0") int pagina, Model model) {
         List<Actividad> todasActividades = actividadService.getTodas();
         
-        // Para cada actividad, obtener sus fotos
+        // Para cada actividad, obtener sus fotos y calcular el promedio de notas
         for (Actividad actividad : todasActividades) {
             List<Foto> fotos = fotoRepository.findByActividadId(actividad.getId());
             actividad.setFotos(fotos);
+            
+            // Calcular el promedio de notas
+            Double promedio = notaRepository.getPromedioNotasByActividadId(actividad.getId());
+            String notaMostrar = promedio != null ? String.format("%.1f", promedio) : "-";
+            
+            // Crear un mapa con la información de la actividad incluyendo la nota
+            Map<String, Object> actividadConNota = new HashMap<>();
+            actividadConNota.put("actividad", actividad);
+            actividadConNota.put("nota", notaMostrar);
+            // Todas las actividades son evaluables
+            actividadConNota.put("puedeEvaluar", true);
         }
         
         // Ordenar por fecha más reciente
@@ -85,7 +102,25 @@ public class ActividadController {
         
         List<Actividad> actividadesPagina = actividadesOrdenadas.subList(inicio, fin);
         
-        model.addAttribute("actividades", actividadesPagina);
+        // Crear lista de actividades con notas
+        List<Map<String, Object>> actividadesConNotas = actividadesPagina.stream()
+            .map(actividad -> {
+                Double promedio = notaRepository.getPromedioNotasByActividadId(actividad.getId());
+                String notaMostrar = promedio != null ? String.format("%.1f", promedio) : "-";
+                
+                // Todas las actividades son evaluables
+                boolean puedeEvaluar = true;
+                
+                Map<String, Object> actividadMap = new HashMap<>();
+                actividadMap.put("actividad", actividad);
+                actividadMap.put("nota", notaMostrar);
+                actividadMap.put("puedeEvaluar", puedeEvaluar);
+                
+                return actividadMap;
+            })
+            .toList();
+        
+        model.addAttribute("actividadesConNotas", actividadesConNotas);
         model.addAttribute("paginaActual", pagina);
         model.addAttribute("totalPaginas", totalPaginas);
         model.addAttribute("totalActividades", totalActividades);
@@ -101,10 +136,16 @@ public class ActividadController {
             List<Foto> fotos = fotoRepository.findByActividadId(id);
             List<Comentario> comentarios = comentarioRepository.findByActividadIdOrderByFechaDesc(id);
             
+            // Calcular información de evaluación
+            Double notaPromedio = notaRepository.getPromedioNotasByActividadId(id);
+            Long totalEvaluaciones = notaRepository.countByActividadId(id);
+            
             model.addAttribute("actividad", actividad);
             model.addAttribute("fotos", fotos);
             model.addAttribute("comentarios", comentarios);
             model.addAttribute("nuevoComentario", new Comentario());
+            model.addAttribute("notaPromedio", notaPromedio);
+            model.addAttribute("totalEvaluaciones", totalEvaluaciones);
             return "detalle";
         }
         return "redirect:/";

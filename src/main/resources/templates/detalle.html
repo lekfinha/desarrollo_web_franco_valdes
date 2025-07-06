@@ -14,10 +14,13 @@
                 <div class="galeria-fotos" th:if="${fotos != null and !fotos.empty}">
                     <h3>Fotos de la Actividad</h3>
                     <div class="fotos-grid">
-                        <div th:each="foto : ${fotos}" class="foto-item">
+                        <div th:each="foto, stat : ${fotos}" class="foto-item">
                             <img th:src="@{/{ruta}(ruta=${foto.rutaArchivo})}" 
                                  th:alt="${foto.descripcion}" 
-                                 class="foto-actividad">
+                                 th:id="'foto-' + ${stat.index}"
+                                 class="foto-actividad"
+                                 th:onclick="'expandImg(\'foto-' + ${stat.index} + '\')'"
+                                 style="cursor: pointer;">
                             <p th:text="${foto.descripcion}" class="descripcion-foto"></p>
                         </div>
                     </div>
@@ -29,7 +32,7 @@
                         <strong>Descripción:</strong>
                         <p th:text="${actividad.descripcion}">Descripción de la actividad</p>
                     </div>
-                    
+
                     <div class="info-item">
                         <strong>Fecha y Hora de Inicio:</strong>
                         <p th:text="${#temporals.format(actividad.diaHoraInicio, 'dd/MM/yyyy HH:mm')}">Fecha de inicio</p>
@@ -54,17 +57,43 @@
                         <strong>Email:</strong>
                         <p th:text="${actividad.email}">Email de contacto</p>
                     </div>
-                    
+
                     <div class="info-item">
                         <strong>Celular:</strong>
                         <p th:text="${actividad.celular}">Número de celular</p>
                     </div>
                 </div>
-                
+
+                <!-- Sección de Evaluación -->
+                <div class="seccion-evaluacion">
+                    <h3>Evaluación de la Actividad</h3>
+                    
+                    <div class="evaluacion-info">
+                        <div class="nota-promedio">
+                            <strong>Nota Promedio:</strong>
+                            <span class="nota-valor" th:text="${notaPromedio != null ? #numbers.formatDecimal(notaPromedio, 1, 1) : 'Sin evaluar'}">0.0</span>
+                        </div>
+                        
+                        <div class="total-evaluaciones">
+                            <strong>Total de Evaluaciones:</strong>
+                            <span th:text="${totalEvaluaciones != null ? totalEvaluaciones : 0}">0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="accion-evaluacion">
+                        <button type="button" class="btn-evaluar" 
+                                th:data-actividad-id="${actividad.id}" 
+                                th:data-actividad-nombre="${actividad.nombre}"
+                                onclick="abrirModalEvaluacion(this)">
+                            Evaluar Actividad
+                        </button>
+                    </div>
+                </div>
+
                 <!-- Sección de Comentarios -->
                 <div class="seccion-comentarios">
                     <h3>Comentarios</h3>
-                    
+    
                     <!-- Formulario para agregar comentario -->
                     <div class="formulario-comentario">
                         <h4>Agregar Comentario</h4>
@@ -73,12 +102,12 @@
                                 <label for="nombre">Nombre:</label>
                                 <input type="text" id="nombre" name="nombre" th:field="*{nombre}" required maxlength="80" placeholder="Tu nombre">
                             </div>
-                            
+        
                             <div class="form-group">
                                 <label for="texto">Comentario:</label>
                                 <textarea id="texto" name="texto" th:field="*{texto}" required maxlength="300" rows="4" placeholder="Escribe tu comentario aquí..."></textarea>
                             </div>
-                            
+        
                             <button type="submit" style="background-color: #8f029c; color: white; padding: 12px 24px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: 600; margin-top: 15px;">Publicar Comentario</button>
                         </form>
                     </div>
@@ -102,7 +131,7 @@
                         <p>No hay comentarios aún. ¡Sé el primero en comentar!</p>
                     </div>
                 </div>
-                
+
                 <!-- Botones de acción -->
                 <div class="acciones">
                     <a href="/" class="btn btn-secondary">Volver al Inicio</a>
@@ -118,5 +147,36 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal para evaluar -->
+    <div id="modal-evaluacion" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Evaluar Actividad</h2>
+            <p id="actividad-nombre"></p>
+            <form id="form-evaluacion">
+                <div class="form-group">
+                    <label for="nota">Selecciona una nota (1-7):</label>
+                    <select id="nota" name="nota" required>
+                        <option value="">Selecciona una nota</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Guardar Evaluación</button>
+                    <button type="button" class="btn-secondary" onclick="cerrarModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script th:src="@{/js/evaluaciones.js}"></script>
+    <script th:src="@{/js/Imagen.js}"></script>
 </body>
 </html>

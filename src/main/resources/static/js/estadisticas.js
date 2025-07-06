@@ -1,43 +1,69 @@
+console.log('Script de estadísticas cargado correctamente');
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Cargar datos para el gráfico de líneas
+    console.log('Cargando gráficos de estadísticas...');
+    
+    // Verificar que Highcharts esté disponible
+    if (typeof Highcharts === 'undefined') {
+        console.error('Highcharts no está cargado');
+        return;
+    }
+    
+    console.log('Highcharts está disponible');
+    
+    // Cargar datos para el gráfico de líneas - Actividades por día
     fetch('/api/estadisticas/actividades-por-dia')
         .then(response => response.json())
         .then(data => {
+            console.log('Datos de actividades por día:', data);
             Highcharts.chart('grafico-lineas', {
                 chart: {
-                    type: 'line'
+                    type: 'line',
+                    backgroundColor: 'transparent'
                 },
                 title: {
-                    text: 'Actividades por Día'
+                    text: 'Actividades por Día',
+                    style: { color: 'white', fontSize: '18px' }
                 },
                 xAxis: {
                     type: 'datetime',
                     title: {
-                        text: 'Fecha'
-                    }
+                        text: 'Fecha',
+                        style: { color: 'white' }
+                    },
+                    labels: { style: { color: 'white' } }
                 },
                 yAxis: {
                     title: {
-                        text: 'Cantidad de Actividades'
-                    }
+                        text: 'Cantidad de Actividades',
+                        style: { color: 'white' }
+                    },
+                    labels: { style: { color: 'white' } }
+                },
+                legend: {
+                    itemStyle: { color: 'white' }
                 },
                 series: [{
                     name: 'Actividades',
                     data: data.map(item => [new Date(item.fecha).getTime(), item.total])
                 }]
             });
-        });
+        })
+        .catch(error => console.error('Error cargando actividades por día:', error));
 
-    // Cargar datos para el gráfico de torta
+    // Cargar datos para el gráfico de torta - Actividades por tema
     fetch('/api/estadisticas/actividades-por-tema')
         .then(response => response.json())
         .then(data => {
+            console.log('Datos de actividades por tema:', data);
             Highcharts.chart('grafico-torta', {
                 chart: {
-                    type: 'pie'
+                    type: 'pie',
+                    backgroundColor: 'transparent'
                 },
                 title: {
-                    text: 'Actividades por Tema'
+                    text: 'Actividades por Tema',
+                    style: { color: 'white', fontSize: '18px' }
                 },
                 plotOptions: {
                     pie: {
@@ -45,7 +71,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         cursor: 'pointer',
                         dataLabels: {
                             enabled: true,
-                            format: '<b>{point.name}</b>: {point.percentage:.1f}%'
+                            format: '<b>{point.name}</b>: {point.percentage:.1f}%',
+                            style: { color: 'white' }
                         }
                     }
                 },
@@ -58,45 +85,61 @@ document.addEventListener('DOMContentLoaded', function() {
                     }))
                 }]
             });
-        });
+        })
+        .catch(error => console.error('Error cargando actividades por tema:', error));
 
-        // Cargar datos para el gráfico de barras
-    fetch("/api/estadisticas/actividades-por-mes-horario")
-      .then((response) => response.json())
-      .then((data) => {
-        // Prepara los datos y convierte a número
-        const meses = data.map(item => item.mes);
-        const manana = data.map(item => Number(item.manana));
-        const mediodia = data.map(item => Number(item.mediodia));
-        const tarde = data.map(item => Number(item.tarde));
+    // Cargar datos para el gráfico de barras - Actividades por mes y horario
+    fetch('/api/estadisticas/actividades-por-mes-horario')
+        .then(response => response.json())
+        .then(data => {
+            console.log('Datos de actividades por mes y horario:', data);
+            
+            // Preparar los datos
+            const meses = data.map(item => item.mes);
+            const manana = data.map(item => Number(item.manana || 0));
+            const mediodia = data.map(item => Number(item.mediodia || 0));
+            const tarde = data.map(item => Number(item.tarde || 0));
 
-        Highcharts.chart('grafico-barras', {
-          chart: {
-            type: 'column',
-            backgroundColor: 'transparent'
-          },
-          title: {
-            text: 'Actividades por Mes y Horario',
-            style: { color: 'white', fontSize: '24px' }
-          },
-          xAxis: {
-            categories: meses,
-            title: { text: 'Mes' }
-          },
-          yAxis: {
-            min: 0,
-            title: { text: 'Cantidad de Actividades' }
-          },
-          legend: { reversed: false },
-          plotOptions: { series: { stacking: 'normal' } },
-          series: [
-            { name: 'Mañana', data: manana },
-            { name: 'Mediodía', data: mediodia },
-            { name: 'Tarde', data: tarde }
-          ]
-        });
-      })
-      .catch((error) => console.error("Error:", error));
+            Highcharts.chart('grafico-barras', {
+                chart: {
+                    type: 'column',
+                    backgroundColor: 'transparent'
+                },
+                title: {
+                    text: 'Actividades por Mes y Horario',
+                    style: { color: 'white', fontSize: '18px' }
+                },
+                xAxis: {
+                    categories: meses,
+                    title: { 
+                        text: 'Mes',
+                        style: { color: 'white' }
+                    },
+                    labels: { style: { color: 'white' } }
+                },
+                yAxis: {
+                    min: 0,
+                    title: { 
+                        text: 'Cantidad de Actividades',
+                        style: { color: 'white' }
+                    },
+                    labels: { style: { color: 'white' } }
+                },
+                legend: { 
+                    reversed: false,
+                    itemStyle: { color: 'white' }
+                },
+                plotOptions: { 
+                    series: { stacking: 'normal' }
+                },
+                series: [
+                    { name: 'Mañana', data: manana },
+                    { name: 'Mediodía', data: mediodia },
+                    { name: 'Tarde', data: tarde }
+                ]
+            });
+        })
+        .catch(error => console.error('Error cargando actividades por mes y horario:', error));
 });
 
 Highcharts.chart('container2', {

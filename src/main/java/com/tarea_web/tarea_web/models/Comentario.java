@@ -10,16 +10,16 @@ public class Comentario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
+
     @Column(name = "nombre", nullable = false, length = 80)
     private String nombre;
-    
+
     @Column(name = "texto", nullable = false, length = 300)
     private String texto;
-    
+
     @Column(name = "fecha", nullable = false)
     private LocalDateTime fecha;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "actividad_id", nullable = false)
     private Actividad actividad;
